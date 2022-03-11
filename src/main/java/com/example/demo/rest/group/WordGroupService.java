@@ -29,8 +29,6 @@ public class WordGroupService {
     WordGroup update(WordGroupCreate groupCreate, Long id) {
         var repoEntity = wordGroupRepo.findById(id);
 
-        System.out.println(repoEntity);
-
         if (repoEntity.isEmpty()) {
             throw new EntityNotFoundException();
         }
