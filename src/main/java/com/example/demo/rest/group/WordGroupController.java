@@ -33,8 +33,6 @@ public class WordGroupController {
             @NotNull @PathVariable Long id,
             @Valid @RequestBody WordGroupCreate group
     ) {
-        System.out.println("id");
-        System.out.println(id);
         return wordGroupService.update(group, id);
     }
 }
