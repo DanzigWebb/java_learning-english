@@ -3,14 +3,13 @@ package com.example.demo.rest.word;
 import com.example.demo.rest.word.model.Word;
 import com.example.demo.rest.word.model.WordCreate;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller("api/v1/word")
+@Controller()
+@RequestMapping("api/v1/word")
 @Validated
 public class WordController {
 
@@ -23,16 +22,16 @@ public class WordController {
     @PostMapping
     public @ResponseBody
     Word create(
-            @Valid WordCreate word
+            @Valid @RequestBody WordCreate word
     ) {
         return wordService.create(word);
     }
 
-    @PutMapping(":id")
+    @PutMapping("/{id}")
     public @ResponseBody
     Word update(
-            @RequestParam Long id,
-            @Valid WordCreate word
+            @NotNull @PathVariable Long id,
+            @Valid @RequestBody WordCreate word
     ) {
         return wordService.update(word, id);
     }
