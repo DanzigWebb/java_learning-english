@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Data
 public class Word {
 
-    private Long id;
-    private Long groupId;
+    private String id;
+    private String groupId;
 
     private String name;
     private String definition;

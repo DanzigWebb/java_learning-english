@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class WordGroup {
+    private String id;
     private String name;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;

@@ -18,6 +18,7 @@ public class WordGroupMapper extends BaseMapper<WordGroup, WordGroupEntity> {
     public WordGroup toModel(WordGroupEntity entity) {
         var group = new WordGroup();
 
+        group.setId(entity.getId().toString());
         group.setName(entity.getName());
         group.setDone(entity.getDone());
         group.setCreateAt(entity.getCreatedAt());
