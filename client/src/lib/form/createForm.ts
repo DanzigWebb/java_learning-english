@@ -120,13 +120,19 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
     /**
      * Form submit wrapper with validation
      */
-    const submit = (e?: Event) => {
+    const submit = (submitHandler: (controls: Controls) => void) => (e?: Event) => {
         e?.preventDefault();
         const onSubmit = options.onSubmit;
         const values = getValues();
 
-        if (_validate(values) && onSubmit) {
-            onSubmit(values);
+        if (_validate(values)) {
+            if (onSubmit) {
+                onSubmit(values);
+            }
+
+            if (submitHandler) {
+                submitHandler(values);
+            }
         }
     };
 
