@@ -1,15 +1,7 @@
 import { Component, createSignal } from 'solid-js';
 import { Page } from '@root/src/pages/Page';
-import { Modal } from '@components/modal';
-import { FormField } from '@components/form/group/FormField';
-import { FormError } from '@components/form/group/FormError';
-import { createForm } from '@root/src/lib/form/createForm';
-import { Validators } from '@root/src/lib/form/validators/validators';
 import httpClient from '@root/src/services/http/httpClient';
-
-type Controls = {
-    name: string;
-}
+import { CreateWordControls, CreateWordGroupModal } from '@root/src/shared/components/modals/CreateWordGroupModal';
 
 /**
  * Todo: создать сервис для запросов к /group & /word
@@ -18,55 +10,30 @@ type Controls = {
  */
 
 export const Home: Component = () => {
-    const {register, errors, submit} = createForm<Controls>();
     const [show, setShow] = createSignal(false);
 
-    const onSubmit = async (controls: Controls) => {
+    const onSubmit = async (controls: CreateWordControls) => {
         const response = await createGroup(controls);
         console.log(response.data);
         setShow(false);
     };
 
+    const openModal = () => setShow(true);
+    const closeModal = () => setShow(false);
+
     return (
         <Page>
             <div className="container py-6 m-4">
-                <button class="btn btn-primary gap-2" onClick={() => setShow(true)}>
+                <button class="btn btn-primary gap-2" onClick={openModal}>
                     <i class="fa-solid fa-plus"/>
                     Create group
                 </button>
 
-                <Modal
-                    class="bg-base-200"
-                    isShow={show()}
-                    onBackdropClick={() => setShow(false)}
-                >
-                    <h2 class="text-2xl">New Group</h2>
-
-                    <div className="divider"/>
-
-                    <form className="flex flex-col" onSubmit={submit(onSubmit)}>
-                        <FormField>
-                            <input
-                                type="text"
-                                class="input"
-                                placeholder="Name..."
-                                autocomplete="off"
-                                classList={{'input-error': !!errors.name}}
-                                {...register('name', {
-                                    validators: [
-                                        Validators.required()
-                                    ]
-                                })}
-                            />
-                            <FormError show={!!errors.name}>Required field</FormError>
-                        </FormField>
-
-                        <div className="modal-actions flex justify-end pt-4 gap-2">
-                            <button class="btn btn-ghost text-error" onClick={() => setShow(false)}>close</button>
-                            <button class="btn btn-primary" type="submit">Create</button>
-                        </div>
-                    </form>
-                </Modal>
+                <CreateWordGroupModal
+                    show={show()}
+                    close={closeModal}
+                    submit={onSubmit}
+                />
             </div>
         </Page>
     );
