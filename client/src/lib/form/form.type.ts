@@ -1,5 +1,7 @@
 export type FormControl = HTMLInputElement | HTMLSelectElement;
 
+export type FormControlRefs<Controls> = { [key in keyof Controls]?: FormControl }
+
 export type FormError<Controls> = { [Name in keyof Controls]?: string };
 
 export type FormValidator<T> = (value: T | undefined | null) => string | void;

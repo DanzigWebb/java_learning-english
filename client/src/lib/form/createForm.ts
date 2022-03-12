@@ -1,6 +1,6 @@
 import { createStore, reconcile } from 'solid-js/store';
 import {
-    FormControl,
+    FormControl, FormControlRefs,
     FormError,
     FormOptions,
     FormValidatorsOption,
@@ -8,7 +8,7 @@ import {
 } from '@root/src/lib/form/form.type';
 import {
     Entries,
-    getControlValue,
+    getControlValue, resetForm,
     SetControlValue,
     validateControl,
     validateForm
@@ -18,7 +18,7 @@ import { CUSTOM_EVENT_NAME } from '@root/src/lib/form/utils/constants';
 const customEvent = new CustomEvent(CUSTOM_EVENT_NAME);
 
 export function createForm<Controls extends {}>(options: FormOptions<Controls> = {}) {
-    const refs: { [key in keyof Controls]?: FormControl } = {};
+    const refs: FormControlRefs<Controls> = {};
     const [errors, setErrors] = createStore<FormError<Controls>>({});
 
     /**
@@ -77,6 +77,9 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         };
     };
 
+    /**
+     * Validate control if change
+     */
     const onControlChange = <Name extends keyof Partial<Controls>, Value extends Controls[Name]>(
         value: Value,
         name: Name
@@ -112,6 +115,11 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
     ) => getControlValue(refs[name]!);
 
     /**
+     * Reset value of registered control
+     */
+    const reset = () => resetForm(refs, setErrors);
+
+    /**
      * @internal
      * Validate current controls
      */
@@ -142,6 +150,7 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         getValue,
         setError,
         submit,
+        reset,
         errors,
     };
 }

@@ -1,12 +1,24 @@
-import { FormControl, FormError, FormValidatorsOption } from '@root/src/lib/form/form.type';
+import { FormControl, FormControlRefs, FormError, FormValidatorsOption } from '@root/src/lib/form/form.type';
 import { reconcile, SetStoreFunction } from 'solid-js/store';
 
 /**
  * @internal
  * Object.entries with true types
  */
-export const Entries = <T extends {}>(obj: T): [keyof T, T[keyof T]][] => {
+export const Entries = <T extends {}>(
+    obj: T
+): [keyof T, T[keyof T]][] => {
     return Object.entries(obj) as [keyof T, T[keyof T]][];
+};
+
+/**
+ * @internal
+ * Object.values with true types
+ */
+export const Values = <Obj extends {}, Key extends keyof Obj>(
+    obj: Obj
+): Obj[Key][] => {
+    return Object.values(obj);
 };
 
 /**
@@ -98,4 +110,40 @@ export const validateControl = <Controls extends {}, Name extends keyof Partial<
     } else {
         return validators(controlValue);
     }
+};
+
+/**
+ * @internal
+ * Reset all controls
+ */
+export const resetForm = <Controls>(
+    controls: FormControlRefs<Controls>,
+    setErrors: SetStoreFunction<FormError<Controls>>
+) => {
+    resetControls(controls);
+    resetErrors(setErrors);
+};
+
+/**
+ * @internal
+ * Reset all controls
+ */
+export const resetControls = <Controls>(
+    controlRefs: FormControlRefs<Controls>
+) => {
+    Values(controlRefs).forEach((control) => {
+        if (control) {
+            control.value = '';
+        }
+    });
+};
+
+/**
+ * @internal
+ * Reset all errors
+ */
+export const resetErrors = <Controls>(
+    setErrors: SetStoreFunction<FormError<Controls>>
+) => {
+    setErrors(reconcile({}));
 };
