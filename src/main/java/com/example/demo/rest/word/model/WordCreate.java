@@ -7,7 +7,7 @@ import lombok.Data;
 public class WordCreate {
 
     @NotNull
-    Long groupId;
+    String groupId;
 
     @NotNull
     String name;

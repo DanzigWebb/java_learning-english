@@ -1,13 +1,11 @@
-import { Component, createSignal } from 'solid-js';
-import { Page } from '@root/src/pages/Page';
-import httpClient from '@root/src/services/http/httpClient';
-import { CreateWordControls, CreateWordGroupModal } from '@root/src/shared/components/modals/CreateWordGroupModal';
-
 /**
- * Todo: создать сервис для запросов к /group & /word
  * Todo: выводить список групп
  * Todo: обновлять список групп после создания
  */
+import { Component, createSignal } from 'solid-js';
+import { CreateWordControls, CreateWordGroupModal } from '@shared/components/modals';
+import { createGroup } from '@api/WordGroupService';
+import { Page } from '@root/src/pages';
 
 export const Home: Component = () => {
     const [show, setShow] = createSignal(false);
@@ -38,11 +36,3 @@ export const Home: Component = () => {
         </Page>
     );
 };
-
-type GroupDto = {
-    name: string;
-}
-
-function createGroup(dto: GroupDto) {
-    return httpClient.post('/api/v1/group', dto);
-}

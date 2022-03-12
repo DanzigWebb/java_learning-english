@@ -11,7 +11,9 @@ export default defineConfig({
     resolve: {
         alias: {
             '@root': __dirname,
-            '@components': path.resolve(__dirname, 'src', 'lib', 'components')
+            '@components': path.resolve(__dirname, 'src', 'lib', 'components'),
+            '@shared': path.resolve(__dirname, 'src', 'shared'),
+            '@api': path.resolve(__dirname, 'src', 'services', 'api'),
         }
     },
     server: {

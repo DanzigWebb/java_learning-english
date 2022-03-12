@@ -11,6 +11,13 @@ export interface WordDto {
     updateAt: string;
 }
 
+export interface WordCreateDto {
+    groupId: string;
+    name: string;
+    definition: string;
+    done?: boolean;
+}
+
 /**
  * @See from Java model: rest.group.model.WordGroup
  */
@@ -21,4 +28,9 @@ export interface WordGroupDto {
     updateAt: string;
     done: boolean;
     words: WordDto[];
+}
+
+export interface WordGroupCreateDto {
+    name: string;
+    done?: boolean;
 }

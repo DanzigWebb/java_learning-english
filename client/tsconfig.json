@@ -11,7 +11,9 @@
     "types": ["vite/client"],
     "paths": {
       "@root/*": ["./*"],
-      "@components/*": ["./src/lib/components/*"]
+      "@components/*": ["./src/lib/components/*"],
+      "@api/*": ["./src/services/api/*"],
+      "@shared/*": ["./src/shared/*"],
     }
   }
 }

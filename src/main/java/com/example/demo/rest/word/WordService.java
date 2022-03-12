@@ -24,7 +24,7 @@ public class WordService {
     public Word create(WordCreate word) {
         var entity = new WordEntity();
 
-        var group = wordGroupRepo.findById(word.getGroupId());
+        var group = wordGroupRepo.findById(Long.parseLong(word.getGroupId()));
 
         if (group.isEmpty()) {
             throw new EntityNotFoundException();
@@ -38,18 +38,18 @@ public class WordService {
     }
 
     public Word update(WordCreate word, Long id) {
-        var entity = wordRepo.findById(id);
+        var repoEntity = wordRepo.findByGroupId(id, Long.parseLong(word.getGroupId()));
 
-        if (entity.isEmpty()) {
+        if (repoEntity.isEmpty()) {
             throw new EntityNotFoundException();
         }
 
-        var getEntity = entity.get();
+        var entity = repoEntity.get();
 
-        getEntity.setName(word.getName());
-        getEntity.setDefinition(word.getDefinition());
-        getEntity.setDone(word.getDone());
+        entity.setName(word.getName());
+        entity.setDefinition(word.getDefinition());
+        entity.setDone(word.getDone());
 
-        return wordMapper.toModel(wordRepo.save(getEntity));
+        return wordMapper.toModel(wordRepo.save(entity));
     }
 }
