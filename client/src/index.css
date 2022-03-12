@@ -13,3 +13,16 @@
 .input-error {
     @apply border-error
 }
+
+.modal-box {
+    @apply pb-12 sm:pb-6;
+}
+
+.modal-wrapper {
+    @apply modal-box;
+    transform: none;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+}

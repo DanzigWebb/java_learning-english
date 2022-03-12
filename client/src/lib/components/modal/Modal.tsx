@@ -1,10 +1,12 @@
-import { Component, Show } from 'solid-js';
+import { Component, createEffect, createSignal, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
+import { ScaleTransition } from '@root/src/lib/transitions';
 
 type Props = {
     isShow?: boolean;
     onBackdropClick?: () => void;
     onClose?: () => void;
+    class?: string;
 }
 
 /**
@@ -21,6 +23,19 @@ type Props = {
  */
 export const Modal: Component<Props> = (props) => {
 
+    const [show, setShow] = createSignal(false);
+
+    createEffect(() => {
+        if (props.isShow) {
+            setShow(true);
+        }
+    });
+
+    function close() {
+        setShow(false);
+        props.onClose && props.onClose();
+    }
+
     function backdropClickHandler() {
         if (props.onBackdropClick) {
             props.onBackdropClick();
@@ -28,12 +43,21 @@ export const Modal: Component<Props> = (props) => {
     }
 
     return (
-        <Show when={props.isShow}>
+        <Show when={show()}>
             <Portal>
                 <div class="modal opacity-100 visible z-50 pointer-events-auto" onClick={backdropClickHandler}>
-                    <div class="modal-box opacity-100" onClick={e => e.stopPropagation()}>
-                        {props.children}
-                    </div>
+                    <ScaleTransition appear={true} onExit={close}>
+                        {props.isShow && (
+                            <div className="modal-wrapper">
+                                <div
+                                    class={`modal-box opacity-100 ${props.class || ''}`}
+                                    onClick={e => e.stopPropagation()}
+                                >
+                                    {props.children}
+                                </div>
+                            </div>
+                        )}
+                    </ScaleTransition>
                 </div>
             </Portal>
         </Show>
