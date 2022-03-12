@@ -1,19 +1,29 @@
-/**
- * Todo: выводить список групп
- * Todo: обновлять список групп после создания
- */
-import { Component, createSignal } from 'solid-js';
+import { Component, createSignal, onMount, For } from 'solid-js';
 import { CreateWordControls, CreateWordGroupModal } from '@shared/components/modals';
-import { createGroup } from '@api/WordGroupService';
+import { createGroup, getGroups } from '@api/WordGroupService';
 import { Page } from '@root/src/pages';
+import { WordGroupDto } from '@models/words';
 
 export const Home: Component = () => {
     const [show, setShow] = createSignal(false);
+    const [groups, setGroups] = createSignal<WordGroupDto[]>([]);
+
+    onMount(async () => {
+        const groups = await getGroupsDto();
+        setGroups(groups);
+    });
 
     const onSubmit = async (controls: CreateWordControls) => {
         const response = await createGroup(controls);
-        console.log(response.data);
+        const group = response.data;
+
         setShow(false);
+        setGroups([...groups(), group]);
+    };
+
+    const getGroupsDto = async () => {
+        const response = await getGroups();
+        return response.data;
     };
 
     const openModal = () => setShow(true);
@@ -21,11 +31,31 @@ export const Home: Component = () => {
 
     return (
         <Page>
-            <div className="container py-6 m-4">
+            <div class="container py-6 m-4">
+
                 <button class="btn btn-primary gap-2" onClick={openModal}>
                     <i class="fa-solid fa-plus"/>
-                    Create group
+                    <span>Create group</span>
                 </button>
+
+                <div className="divider"/>
+
+                <div className="flex gap-4">
+                    <For each={groups()}>
+                        {group => (
+                            <div class="card w-96 bg-base-100 shadow-xl">
+                                <div class="card-content">
+                                    <header class="flex items-center justify-between px-4">
+                                        <h3 class="text-lg p-2 truncate">{group.name}</h3>
+                                        <button class="btn btn-sm btn-ghost btn-circle">
+                                            <i class="fa-solid fa-ellipsis-vertical"/>
+                                        </button>
+                                    </header>
+                                </div>
+                            </div>
+                        )}
+                    </For>
+                </div>
 
                 <CreateWordGroupModal
                     show={show()}

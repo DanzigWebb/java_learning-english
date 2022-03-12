@@ -12,8 +12,10 @@
     "paths": {
       "@root/*": ["./*"],
       "@components/*": ["./src/lib/components/*"],
+      "@services/*": ["./src/services/*"],
       "@api/*": ["./src/services/api/*"],
       "@shared/*": ["./src/shared/*"],
+      "@models/*": ["./src/models/*"],
     }
   }
 }

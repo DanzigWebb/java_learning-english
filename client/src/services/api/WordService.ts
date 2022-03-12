@@ -1,5 +1,5 @@
-import { WordCreateDto, WordDto } from '@root/src/models/words/words.type';
-import httpClient from '@root/src/services/http/httpClient';
+import { WordCreateDto, WordDto } from '@models/words';
+import httpClient from '@services/http/httpClient';
 
 const url = 'api/v1/word';
 

@@ -8,6 +8,8 @@ import com.example.demo.rest.group.model.WordGroupCreate;
 import com.example.demo.rest.group.model.WordGroupMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WordGroupService {
 
@@ -17,6 +19,10 @@ public class WordGroupService {
     public WordGroupService(WordGroupRepo wordGroupRepo, WordGroupMapper wordGroupMapper) {
         this.wordGroupRepo = wordGroupRepo;
         this.wordGroupMapper = wordGroupMapper;
+    }
+
+    List<WordGroup> getAll() {
+        return wordGroupMapper.entityListToModel(wordGroupRepo.findAll());
     }
 
     WordGroup create(WordGroupCreate groupCreate) {
