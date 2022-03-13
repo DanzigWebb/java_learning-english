@@ -152,5 +152,6 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         submit,
         reset,
         errors,
+        refs,
     };
 }

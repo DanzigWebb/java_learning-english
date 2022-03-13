@@ -3,6 +3,7 @@ import { CreateWordControls, CreateWordGroupModal } from '@shared/components/mod
 import { createGroup, getGroups } from '@api/WordGroupService';
 import { Page } from '@root/src/pages';
 import { WordGroupDto } from '@models/words';
+import { WordGroup } from '@shared/components/words';
 
 export const Home: Component = () => {
     const [show, setShow] = createSignal(false);
@@ -20,6 +21,11 @@ export const Home: Component = () => {
         setShow(false);
         setGroups([...groups(), group]);
     };
+
+    const onCreateWord = async () => {
+        const groups = await getGroupsDto();
+        setGroups(groups);
+    }
 
     const getGroupsDto = async () => {
         const response = await getGroups();
@@ -40,19 +46,14 @@ export const Home: Component = () => {
 
                 <div className="divider"/>
 
-                <div className="flex gap-4">
+                <div className="flex items-start gap-4">
                     <For each={groups()}>
                         {group => (
-                            <div class="card w-96 bg-base-100 shadow-xl">
-                                <div class="card-content">
-                                    <header class="flex items-center justify-between px-4">
-                                        <h3 class="text-lg p-2 truncate">{group.name}</h3>
-                                        <button class="btn btn-sm btn-ghost btn-circle">
-                                            <i class="fa-solid fa-ellipsis-vertical"/>
-                                        </button>
-                                    </header>
-                                </div>
-                            </div>
+                            <WordGroup
+                                group={group}
+                                class="w-96 bg-base-100"
+                                onCreate={onCreateWord}
+                            />
                         )}
                     </For>
                 </div>

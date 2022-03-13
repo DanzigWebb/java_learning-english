@@ -8,6 +8,7 @@ type Props = {
     isShow: boolean;
     reference?: HTMLElement;
     onBackdropClick?: () => void;
+    autoWidth?: boolean;
 }
 
 /**
@@ -53,6 +54,14 @@ export const Menu: Component<Props> = (props) => {
         props.onBackdropClick && props.onBackdropClick();
     }
 
+    function parseWidth() {
+        if (props.autoWidth) {
+            return (reference()?.scrollWidth || '') + 'px';
+        } else {
+            return '';
+        }
+    }
+
     const instance = usePopper(reference, popper, {
         modifiers: [{
             name: 'offset',
@@ -73,9 +82,11 @@ export const Menu: Component<Props> = (props) => {
                     <div ref={setPopper} onClick={e => e.stopPropagation()}>
                         <ScaleTransition appear={true} onExit={destroy}>
                             {props.isShow && (
-                                <ul class="menu bg-base-200 z-10 shadow-xl">
-                                    {props.children}
-                                </ul>
+                                <div style={{'width': parseWidth()}}>
+                                    <ul class="menu bg-base-200 z-10 shadow-xl">
+                                        {props.children}
+                                    </ul>
+                                </div>
                             )}
                         </ScaleTransition>
                     </div>
