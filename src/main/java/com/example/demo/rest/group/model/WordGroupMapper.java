@@ -21,6 +21,7 @@ public class WordGroupMapper extends BaseMapper<WordGroup, WordGroupEntity> {
         group.setId(entity.getId().toString());
         group.setName(entity.getName());
         group.setDone(entity.getDone());
+        group.setArchived(entity.getArchived());
         group.setCreateAt(entity.getCreatedAt());
         group.setUpdateAt(entity.getUpdatedAt());
         group.setWords(wordMapper.entityListToModel(entity.getWords()));

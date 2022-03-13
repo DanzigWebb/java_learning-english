@@ -13,5 +13,6 @@ public class WordGroup {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private Boolean done;
+    private Boolean archived;
     private List<Word> words;
 }

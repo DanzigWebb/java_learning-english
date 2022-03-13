@@ -27,6 +27,7 @@ export interface WordGroupDto {
     createAt: string;
     updateAt: string;
     done: boolean;
+    archived: boolean;
     words: WordDto[];
 }
 
