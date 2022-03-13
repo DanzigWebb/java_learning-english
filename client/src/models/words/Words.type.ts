@@ -19,7 +19,7 @@ export interface WordCreateDto {
 }
 
 /**
- * @See from Java model: rest.group.model.WordGroup
+ * @See from Java model: rest.group.model.GroupCard
  */
 export interface WordGroupDto {
     id: string;

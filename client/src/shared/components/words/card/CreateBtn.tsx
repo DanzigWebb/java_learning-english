@@ -14,17 +14,22 @@ type Props = {
     onSubmit?: (controls: WordGroupAddControls) => void;
 }
 
-export const WordGroupAdd: Component<Props> = (props) => {
+/**
+ * Button with form menu for create word
+ * emit submit with WordCreateDto
+ */
+export const CreateBtn: Component<Props> = (props) => {
     const [show, setShow] = createSignal(false);
     const [reference, setReference] = createSignal<HTMLElement>();
     const {register, submit, errors, reset, refs} = createForm<WordGroupAddControls>();
 
     const onSubmit = (controls: WordGroupAddControls) => {
-        if (props.onSubmit) {
-            props.onSubmit(controls);
-        }
+        props.onSubmit?.(controls);
     };
 
+    /**
+     * Opens create menu and focuses the name input
+     */
     const open = () => {
         setShow(true);
         const input = refs.name;
@@ -32,6 +37,10 @@ export const WordGroupAdd: Component<Props> = (props) => {
             input.focus();
         }
     };
+
+    /**
+     * Closes create menu and resets form inputs
+     */
     const close = () => {
         reset();
         setShow(false);

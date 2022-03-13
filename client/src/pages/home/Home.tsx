@@ -3,7 +3,7 @@ import { CreateWordControls, CreateWordGroupModal } from '@shared/components/mod
 import { createGroup, getGroups } from '@api/WordGroupService';
 import { Page } from '@root/src/pages';
 import { WordGroupDto } from '@models/words';
-import { WordGroup } from '@shared/components/words';
+import { GroupCard } from '@shared/components/words';
 
 export const Home: Component = () => {
     const [show, setShow] = createSignal(false);
@@ -25,7 +25,7 @@ export const Home: Component = () => {
     const onCreateWord = async () => {
         const groups = await getGroupsDto();
         setGroups(groups);
-    }
+    };
 
     const getGroupsDto = async () => {
         const response = await getGroups();
@@ -36,33 +36,39 @@ export const Home: Component = () => {
     const closeModal = () => setShow(false);
 
     return (
-        <Page>
-            <div class="container py-6 m-4">
+        <Page full>
+            <div class="p-2 h-full">
+                <div class="py-6 m-4 h-full flex flex-col">
 
-                <button class="btn btn-primary gap-2" onClick={openModal}>
-                    <i class="fa-solid fa-plus"/>
-                    <span>Create group</span>
-                </button>
+                    <header>
+                        <button class="btn btn-primary gap-2" onClick={openModal}>
+                            <i class="fa-solid fa-plus"/>
+                            <span>Create group</span>
+                        </button>
+                    </header>
 
-                <div className="divider"/>
+                    <div className="divider"/>
 
-                <div className="flex items-start gap-4">
-                    <For each={groups()}>
-                        {group => (
-                            <WordGroup
-                                group={group}
-                                class="w-96 bg-base-100"
-                                onCreate={onCreateWord}
-                            />
-                        )}
-                    </For>
+                    <div class="overflow-x-hidden flex-1">
+                        <div className="h-full flex items-start overflow-x-scroll gap-4">
+                            <For each={groups()}>
+                                {group => (
+                                    <GroupCard
+                                        group={group}
+                                        class="w-80 bg-base-300 shrink-0"
+                                        onCreate={onCreateWord}
+                                    />
+                                )}
+                            </For>
+                        </div>
+                    </div>
+
+                    <CreateWordGroupModal
+                        show={show()}
+                        close={closeModal}
+                        submit={onSubmit}
+                    />
                 </div>
-
-                <CreateWordGroupModal
-                    show={show()}
-                    close={closeModal}
-                    submit={onSubmit}
-                />
             </div>
         </Page>
     );

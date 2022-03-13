@@ -1,1 +1,1 @@
-export * from './WordGroup';
+export * from './card/GroupCard';

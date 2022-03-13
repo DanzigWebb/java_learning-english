@@ -8,7 +8,7 @@ export const Page: Component<Props> = (props) => {
 
     return (
         <div
-            class="flex flex-col"
+            class="flex flex-col justify-start"
             classList={{
                 'h-full': !!props.full
             }}
