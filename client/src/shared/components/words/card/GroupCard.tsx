@@ -28,9 +28,9 @@ export const GroupCard: Component<Props> = (props) => {
      * Awaits request of create word
      * Calls onCreate of props
      */
-    const fetchCreateWord = async ({name, definition}: WordGroupAddControls) => {
+    const fetchCreateWord = async ({name, definition, associate}: WordGroupAddControls) => {
         const groupId = props.group.id;
-        const dto: WordCreateDto = {groupId, name, definition};
+        const dto: WordCreateDto = {groupId, name, definition, associate};
         const response = await createWord(dto);
 
         props.onCreate?.(response.data);

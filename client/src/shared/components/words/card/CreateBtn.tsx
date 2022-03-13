@@ -8,6 +8,7 @@ import { createForm } from '@root/src/lib/form/createForm';
 export type WordGroupAddControls = {
     name: string;
     definition: string;
+    associate: string;
 }
 
 type Props = {
@@ -94,6 +95,17 @@ export const CreateBtn: Component<Props> = (props) => {
                             })}
                         />
                         <FormError show={!!errors.definition}>Required field</FormError>
+                    </FormField>
+
+                    <FormField>
+                        <input
+                            type="text"
+                            class="input input-sm"
+                            placeholder="Associate..."
+                            autocomplete="off"
+                            classList={{'input-error': !!errors.associate}}
+                            {...register('associate')}
+                        />
                     </FormField>
 
                     <div class="modal-actions flex items-center justify-end pt-2 gap-2">

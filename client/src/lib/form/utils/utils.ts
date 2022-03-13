@@ -108,7 +108,7 @@ export const validateControl = <Controls extends {}, Name extends keyof Partial<
             }
         }
     } else {
-        return validators(controlValue);
+        return validators?.(controlValue);
     }
 };
 

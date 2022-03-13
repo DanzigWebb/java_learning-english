@@ -8,6 +8,7 @@ import { ScaleTransition } from '@root/src/lib/transitions';
 type Props = {
     message: string;
     placement?: Placement;
+    class?: string;
 }
 
 /**
@@ -52,7 +53,7 @@ export const Tooltip: Component<Props> = (props) => {
     return (
         <>
             <span
-                class="inline-block"
+                class={`inline-block ${props.class || ''}`}
                 ref={setTriggerRef}
                 onMouseEnter={showTooltip}
                 onMouseLeave={() => setShow(false)}

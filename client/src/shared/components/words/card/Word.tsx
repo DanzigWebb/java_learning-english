@@ -27,14 +27,18 @@ export const Word: Component<Props> = (props) => {
 
     return (
         <li onClick={toggle}>
-            <Tooltip message={word().definition} placement="right">
-                <div class="flex justify-between">
-                    <p class="capitalize" classList={{'line-through': word().done}}>
-                        {word().name}
-                    </p>
+            <Tooltip class="w-full" message={word().definition} placement="right">
+                <div class="flex items-center justify-between">
+                    <div className="flex flex-col overflow-x-hidden">
+                        <p class="capitalize" classList={{'line-through': word().done}}>
+                            {word().name}
+                        </p>
+                        <i class="text-sm opacity-80 truncate">{word().associate || '...'}</i>
+                    </div>
+
                     <input
                         type="checkbox"
-                        class="toggle toggle-xs"
+                        class="toggle toggle-xs shrink"
                         classList={{
                             'toggle-accent': word().done
                         }}
