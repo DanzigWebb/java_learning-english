@@ -6,4 +6,5 @@ import lombok.Data;
 public class WordGroupCreate {
     String name;
     Boolean done;
+    Boolean archived;
 }

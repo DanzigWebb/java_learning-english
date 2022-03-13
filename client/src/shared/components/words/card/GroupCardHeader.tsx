@@ -1,9 +1,12 @@
+import { Component, createMemo, createSignal, Show } from 'solid-js';
 import { WordGroupDto } from '@models/words';
-import { Component } from 'solid-js';
+import { Menu, MenuOption } from '@components/menu';
+import { Tooltip } from '@components/tooltip/Tooltip';
 
 type Props = {
     done: boolean;
     group: WordGroupDto;
+    onArchived?: (group: WordGroupDto) => void;
 }
 
 /**
@@ -14,7 +17,15 @@ type Props = {
  */
 export const GroupCardHeader: Component<Props> = (props) => {
 
+    const [show, setShow] = createSignal(false);
+    const [reference, setReference] = createSignal<HTMLElement>();
+    const isArchived = createMemo(() => props.group.archived);
+
     const headerColor = (done: boolean) => {
+        if (isArchived()) {
+            return 'bg-base-200';
+        }
+
         if (done) {
             return 'bg-accent text-accent-content';
         } else {
@@ -22,14 +33,49 @@ export const GroupCardHeader: Component<Props> = (props) => {
         }
     };
 
+    const open = () => setShow(true);
+    const close = () => setShow(false);
+
+    const toggleArchived = () => {
+        const group = {...props.group, archived: !isArchived()};
+        props.onArchived?.(group);
+    };
+
     return (
-        <header class={`mb-2 px-4 transition-all ${headerColor(props.done)}`}>
-            <div class="card-content flex items-center justify-between">
-                <h3 class="text-lg p-2 truncate">{props.group.name}</h3>
-                <button class="btn btn-sm btn-ghost btn-circle">
-                    <i class="fa-solid fa-ellipsis-vertical"/>
-                </button>
-            </div>
-        </header>
-    )
-}
+        <>
+            <header class={`mb-2 px-4 transition-all ${headerColor(props.done)}`}>
+                <div class="card-content flex items-center justify-between">
+                    <h3 class="text-lg p-2 truncate inline-flex gap-2 items-center">
+
+                        <Show when={isArchived()}>
+                            <Tooltip message="In archive">
+                                <i class="fa-solid fa-box-archive text-error"/>
+                            </Tooltip>
+                        </Show>
+
+                        <span
+                            class="capitalize"
+                            classList={{'line-through': isArchived()}}
+                        >
+                            {props.group.name}
+                        </span>
+                    </h3>
+                    <button class="btn btn-sm btn-ghost btn-circle" onClick={open} ref={setReference}>
+                        <i class="fa-solid fa-ellipsis-vertical"/>
+                    </button>
+                </div>
+            </header>
+
+            <Menu
+                isShow={show()}
+                reference={reference()}
+                onBackdropClick={close}
+            >
+                <MenuOption onClick={toggleArchived}>
+                    <i class="fa-solid fa-box-archive"/>
+                    <span>Archived</span>
+                </MenuOption>
+            </Menu>
+        </>
+    );
+};

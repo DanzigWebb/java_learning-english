@@ -42,6 +42,7 @@ public class WordGroupService {
         var entity = repoEntity.get();
         entity.setName(groupCreate.getName());
         entity.setDone(groupCreate.getDone());
+        entity.setArchived(groupCreate.getArchived());
 
         return wordGroupMapper.toModel(wordGroupRepo.save(entity));
     }

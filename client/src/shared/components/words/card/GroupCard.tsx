@@ -10,6 +10,7 @@ type Props = {
     group: WordGroupDto;
     class?: string;
     onCreate?: (dto: WordDto) => void;
+    onArchived?: (dto: WordGroupDto) => void;
 }
 
 /**
@@ -58,11 +59,18 @@ export const GroupCard: Component<Props> = (props) => {
         return words.every(w => w.done);
     }
 
+    const archiveGroup = (group: WordGroupDto) => {
+        props.onArchived?.(group);
+    };
+
     return (
-        <div class={`card shadow-xl ${props.class || ''}`}>
+        <div class={`card shadow-xl ${props.class || ''}`} classList={{
+            'opacity-80': props.group.archived
+        }}>
             <GroupCardHeader
                 done={done()}
                 group={group()}
+                onArchived={archiveGroup}
             />
 
             <div class="card-content">

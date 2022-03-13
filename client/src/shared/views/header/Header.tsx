@@ -1,10 +1,7 @@
 import { Link } from 'solid-app-router';
-import { Component, Show } from 'solid-js';
-import { Tooltip } from '@components/tooltip/Tooltip';
-import { useApp } from '@root/src/shared/providers/AppProvider';
+import { Component } from 'solid-js';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 import { ThemeMenu } from '@root/src/shared/views/header/ThemeMenu';
-import { ProfileMenu } from '@root/src/shared/views/header/ProfileMenu';
 
 export const Header: Component = () => {
 

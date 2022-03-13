@@ -1,6 +1,6 @@
 import { Component, createSignal, onMount, For } from 'solid-js';
 import { CreateWordControls, CreateWordGroupModal } from '@shared/components/modals';
-import { createGroup, getGroups } from '@api/WordGroupService';
+import { createGroup, getGroups, updateGroup } from '@api/WordGroupService';
 import { Page } from '@root/src/pages';
 import { WordGroupDto } from '@models/words';
 import { GroupCard } from '@shared/components/words';
@@ -35,6 +35,22 @@ export const Home: Component = () => {
     const openModal = () => setShow(true);
     const closeModal = () => setShow(false);
 
+    const toggleArchived = async (group: WordGroupDto) => {
+        const response = await updateGroup(group, group.id);
+        const dto = response.data;
+        const cloneGroups = [...groups()];
+
+        setGroups(updateGroupDtoInList(cloneGroups, dto));
+    };
+
+    function updateGroupDtoInList(list: WordGroupDto[], dto: WordGroupDto) {
+        const findIndex = list.findIndex(item => item.id === dto.id);
+        if (findIndex >= 0) {
+            list[findIndex] = dto;
+        }
+        return list;
+    }
+
     return (
         <Page full>
             <div class="p-2 h-full">
@@ -57,6 +73,7 @@ export const Home: Component = () => {
                                         group={group}
                                         class="w-80 bg-base-300 shrink-0"
                                         onCreate={onCreateWord}
+                                        onArchived={toggleArchived}
                                     />
                                 )}
                             </For>
