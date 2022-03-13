@@ -64,29 +64,25 @@ export const GroupCard: Component<Props> = (props) => {
     };
 
     return (
-        <div class={`card shadow-xl ${props.class || ''}`} classList={{
-            'opacity-80': props.group.archived
-        }}>
+        <div class={`card shadow-xl relative ${props.class || ''}`}>
             <GroupCardHeader
                 done={done()}
                 group={group()}
                 onArchived={archiveGroup}
             />
 
-            <div class="card-content">
-                <ul class="menu">
-                    <For each={group().words}>
-                        {word => (<>
-                            <Word word={word} toggle={toggleWord}/>
-                            <span className="divider m-0 h-1"/>
-                        </>)}
-                    </For>
-                </ul>
+            <ul class="menu flex-[1_1_auto] overflow-x-hidden overflow-y-auto">
+                <For each={group().words}>
+                    {word => (<>
+                        <Word word={word} toggle={toggleWord}/>
+                        <span className="divider m-0 h-1"/>
+                    </>)}
+                </For>
+            </ul>
 
-                <CreateBtn
-                    onSubmit={fetchCreateWord}
-                />
-            </div>
+            <CreateBtn
+                onSubmit={fetchCreateWord}
+            />
         </div>
     );
 };

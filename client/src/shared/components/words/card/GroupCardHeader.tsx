@@ -43,7 +43,7 @@ export const GroupCardHeader: Component<Props> = (props) => {
 
     return (
         <>
-            <header class={`mb-2 px-4 transition-all ${headerColor(props.done)}`}>
+            <header class={`mb-2 px-4 sticky top-0 z-10 flex-[0_0_auto] transition-all ${headerColor(props.done)}`}>
                 <div class="card-content flex items-center justify-between">
                     <h3 class="text-lg p-2 truncate inline-flex gap-2 items-center">
 

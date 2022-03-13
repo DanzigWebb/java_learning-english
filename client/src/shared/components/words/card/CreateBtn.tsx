@@ -49,14 +49,16 @@ export const CreateBtn: Component<Props> = (props) => {
 
     return (
         <>
-            <button
-                class="btn btn-primary btn-ghost gap-2 w-full"
-                onClick={open}
-                ref={setReference}
-            >
-                <i class="fa-solid fa-plus"/>
-                <span>Добавить слово</span>
-            </button>
+            <div class="sticky bottom-0 bg-base-200">
+                <button
+                    class="btn btn-primary btn-ghost gap-2 w-full"
+                    onClick={open}
+                    ref={setReference}
+                >
+                    <i class="fa-solid fa-plus"/>
+                    <span>Добавить слово</span>
+                </button>
+            </div>
 
             <Menu
                 isShow={show()}
