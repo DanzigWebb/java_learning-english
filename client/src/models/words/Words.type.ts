@@ -9,6 +9,8 @@ export interface WordDto {
     done: boolean;
     createAt: string;
     updateAt: string;
+
+    associate: string;
 }
 
 export interface WordCreateDto {

@@ -15,6 +15,7 @@ public class WordMapper extends BaseMapper<Word, WordEntity> {
         word.setGroupId(entity.getGroup().getId().toString());
         word.setName(entity.getName());
         word.setDefinition(entity.getDefinition());
+        word.setAssociate(entity.getAssociate());
         word.setDone(entity.getDone());
         word.setCreateAt(entity.getCreatedAt());
         word.setUpdateAt(entity.getUpdatedAt());

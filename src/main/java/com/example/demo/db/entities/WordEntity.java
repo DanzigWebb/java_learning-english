@@ -16,6 +16,9 @@ public class WordEntity extends BaseEntity {
     @Lob
     private String definition;
 
+    @Lob
+    private String associate;
+
     private Boolean done;
 
     @ManyToOne(fetch = FetchType.LAZY)

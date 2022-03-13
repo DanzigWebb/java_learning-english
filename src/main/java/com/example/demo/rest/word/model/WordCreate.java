@@ -13,5 +13,6 @@ public class WordCreate {
     String name;
 
     String definition;
+    String associate;
     Boolean done;
 }

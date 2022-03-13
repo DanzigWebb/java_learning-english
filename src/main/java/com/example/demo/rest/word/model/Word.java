@@ -12,6 +12,7 @@ public class Word {
 
     private String name;
     private String definition;
+    private String associate;
     private Boolean done;
 
     private LocalDateTime createAt;
