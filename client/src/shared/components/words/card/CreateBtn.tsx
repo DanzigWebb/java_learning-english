@@ -26,6 +26,7 @@ export const CreateBtn: Component<Props> = (props) => {
 
     const onSubmit = (controls: WordGroupAddControls) => {
         props.onSubmit?.(controls);
+        setShow(false);
     };
 
     /**

@@ -22,6 +22,7 @@ type Props = {
 export const GroupCard: Component<Props> = (props) => {
 
     const group = createMemo(() => props.group);
+    const [words, setWords] = createSignal(group()?.words || [])
     const [done, setDone] = createSignal(isDone(props.group.words));
 
     /**
@@ -32,6 +33,7 @@ export const GroupCard: Component<Props> = (props) => {
         const groupId = props.group.id;
         const dto: WordCreateDto = {groupId, name, definition, associate};
         const response = await createWord(dto);
+        setWords((words) => [...words, response.data])
 
         props.onCreate?.(response.data);
     };
@@ -72,7 +74,7 @@ export const GroupCard: Component<Props> = (props) => {
             />
 
             <ul class="menu flex-[1_1_auto] overflow-x-hidden overflow-y-auto">
-                <For each={group().words}>
+                <For each={words()}>
                     {word => (<>
                         <Word word={word} toggle={toggleWord}/>
                         <span className="divider m-0 h-1"/>

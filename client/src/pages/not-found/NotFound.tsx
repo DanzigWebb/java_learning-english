@@ -16,10 +16,7 @@ export const NotFound: Component = () => {
                         <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
                             exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
 
-                        <Link href={app.auth()
-                            ? PagesPathEnum.HOME
-                            : PagesPathEnum.SIGNIN
-                        }>
+                        <Link href={PagesPathEnum.HOME}>
                             <button class="btn btn-primary">
                                 {app.auth()
                                     ? 'Get started'

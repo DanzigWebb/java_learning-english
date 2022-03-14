@@ -25,11 +25,6 @@ export const GroupsRow: Component = () => {
         setGroups([...groups(), group]);
     };
 
-    const onCreateWord = async () => {
-        const groups = await getGroupsDto();
-        setGroups(groups);
-    };
-
     const getGroupsDto = async () => {
         const response = await getGroups();
         return response.data.reverse();
@@ -72,7 +67,6 @@ export const GroupsRow: Component = () => {
                                         <GroupCard
                                             group={group}
                                             class="w-80 bg-base-200 max-h-full"
-                                            onCreate={onCreateWord}
                                             onArchived={toggleArchived}
                                         />
                                     </div>
