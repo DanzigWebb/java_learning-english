@@ -148,6 +148,7 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         register,
         setValue,
         getValue,
+        getValues,
         setError,
         submit,
         reset,
