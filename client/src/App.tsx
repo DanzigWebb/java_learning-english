@@ -5,7 +5,7 @@ import { Route, Routes } from 'solid-app-router';
 import { appStorage } from '@root/src/services/storage';
 import { useApp } from '@root/src/shared/providers/AppProvider';
 import { Alerts } from '@root/src/shared/views/alerts/Alerts';
-import { Home, NotFound } from '@root/src/pages';
+import { GroupsRow, NotFound } from '@root/src/pages';
 
 
 const Routers: Component = () => {
@@ -13,7 +13,7 @@ const Routers: Component = () => {
         <Routes>
             <Route
                 path={`/`}
-                element={<Home/>}
+                element={<GroupsRow/>}
             />
             <Route path="/*all" element={<NotFound/>}/>
         </Routes>

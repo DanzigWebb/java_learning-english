@@ -4,13 +4,13 @@ import { createGroup, getGroups, updateGroup } from '@api/WordGroupService';
 import { Page } from '@root/src/pages';
 import { WordGroupDto } from '@models/words';
 import { GroupCard } from '@shared/components/words';
-import { HomeHeader } from '@root/src/pages/home/HomeHeader';
-import { HomeFilters } from '@root/src/pages/home/type/home.type';
+import { GroupsRowHeader } from '@root/src/pages/groups-row/GroupsRowHeader';
+import { HomeFilters } from '@root/src/pages/groups-row/type/home.type';
 import { createStore, reconcile } from 'solid-js/store';
-import { FilterGroupsPipe } from '@root/src/pages/home/pipes/FilterGroup.pipe';
+import { FilterGroupsPipe } from '@root/src/pages/groups-row/pipes/FilterGroup.pipe';
 import { TransitionGroup } from 'solid-transition-group';
 
-export const Home: Component = () => {
+export const GroupsRow: Component = () => {
     const [groups, setGroups] = createSignal<WordGroupDto[]>([]);
     const [filters, setFilters] = createStore<Partial<HomeFilters>>({});
 
@@ -58,10 +58,10 @@ export const Home: Component = () => {
     return (
         <Page full>
             <div class="p-2 h-full grid grid-rows-[auto_1fr]">
-                <HomeHeader
+                <GroupsRowHeader
                     onSubmit={onSubmit}
                     onUpdateFilters={updateFilters}>
-                </HomeHeader>
+                </GroupsRowHeader>
 
                 <div class="relative">
                     <div class="words-group-wrapper">

@@ -1,7 +1,7 @@
 import { Component, createSignal, onCleanup, onMount } from 'solid-js';
 import { CreateWordControls, CreateWordGroupModal } from '@shared/components/modals';
 import { createForm } from '@root/src/lib/form/createForm';
-import { HomeFilters } from '@root/src/pages/home/type/home.type';
+import { HomeFilters } from '@root/src/pages/groups-row/type/home.type';
 import { Tooltip } from '@components/tooltip/Tooltip';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 
@@ -12,7 +12,7 @@ type Props = {
     onUpdateFilters?: (filter: Partial<HomeFilters>) => void;
 }
 
-export const HomeHeader: Component<Props> = (props) => {
+export const GroupsRowHeader: Component<Props> = (props) => {
     const [show, setShow] = createSignal(false);
     const {register, getValues} = createForm<Controls>({
         defaultValues: {

@@ -1,3 +1,3 @@
 export * from './Page';
-export * from './home/Home';
+export * from './groups-row/GroupsRow';
 export * from './not-found/NotFound';

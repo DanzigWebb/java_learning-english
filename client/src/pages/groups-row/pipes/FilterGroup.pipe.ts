@@ -1,5 +1,5 @@
 import { WordGroupDto } from '@models/words';
-import { HomeFilters } from '@root/src/pages/home/type/home.type';
+import { HomeFilters } from '@root/src/pages/groups-row/type/home.type';
 
 export type FilterPipe<Data = any, Filters = any> = (data: Data[], filters: Filters) => Data[]
 
