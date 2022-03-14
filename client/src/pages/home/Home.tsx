@@ -60,12 +60,11 @@ export const Home: Component = () => {
                         <span>Create group</span>
                     </button>
 
-                    <div className="divider"/>
+                    <div class="divider"/>
                 </header>
 
-                <div className="relative">
-                    <div
-                        className="py-6 pb-10 overflow-y-hidden overflow-x-auto whitespace-nowrap absolute top-0 left-0 bottom-0 right-0">
+                <div class="relative">
+                    <div class="words-group-wrapper">
                         <For each={groups()}>
                             {group => (
                                 <div class="h-full inline-block m-1 align-top whitespace-nowrap">

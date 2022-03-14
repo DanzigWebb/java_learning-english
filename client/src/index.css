@@ -18,6 +18,10 @@
     @apply pb-12 sm:pb-6;
 }
 
+.words-group-wrapper {
+    @apply py-6 pb-10 overflow-y-hidden overflow-x-auto whitespace-nowrap absolute top-0 left-0 bottom-0 right-0
+}
+
 .modal-wrapper {
     @apply modal-box;
     transform: none;
