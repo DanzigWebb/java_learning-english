@@ -23,7 +23,7 @@ export const GroupCardHeader: Component<Props> = (props) => {
 
     const headerColor = (done: boolean) => {
         if (isArchived()) {
-            return 'bg-base-200';
+            return 'bg-base-300';
         }
 
         if (done) {
