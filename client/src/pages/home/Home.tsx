@@ -53,34 +53,31 @@ export const Home: Component = () => {
 
     return (
         <Page full>
-            <div class="p-2 h-full">
-                <div class="py-6 m-4 h-full grid grid-rows-[auto_1fr]">
+            <div class="p-2 h-full grid grid-rows-[auto_1fr]">
+                <header>
+                    <button class="btn btn-primary gap-2" onClick={openModal}>
+                        <i class="fa-solid fa-plus"/>
+                        <span>Create group</span>
+                    </button>
 
-                    <header>
-                        <button class="btn btn-primary gap-2" onClick={openModal}>
-                            <i class="fa-solid fa-plus"/>
-                            <span>Create group</span>
-                        </button>
+                    <div className="divider"/>
+                </header>
 
-                        <div className="divider"/>
-                    </header>
-
-
-                    <div className="relative">
-                        <div className="overflow-y-hidden overflow-x-auto whitespace-nowrap absolute top-0 left-0 bottom-0 right-0">
-                            <For each={groups()}>
-                                {group => (
-                                    <div class="h-full inline-block m-1 align-top whitespace-nowrap">
-                                        <GroupCard
-                                            group={group}
-                                            class="w-80 bg-base-300 max-h-full"
-                                            onCreate={onCreateWord}
-                                            onArchived={toggleArchived}
-                                        />
-                                    </div>
-                                )}
-                            </For>
-                        </div>
+                <div className="relative">
+                    <div
+                        className="py-6 pb-10 overflow-y-hidden overflow-x-auto whitespace-nowrap absolute top-0 left-0 bottom-0 right-0">
+                        <For each={groups()}>
+                            {group => (
+                                <div class="h-full inline-block m-1 align-top whitespace-nowrap">
+                                    <GroupCard
+                                        group={group}
+                                        class="w-80 bg-base-300 max-h-full"
+                                        onCreate={onCreateWord}
+                                        onArchived={toggleArchived}
+                                    />
+                                </div>
+                            )}
+                        </For>
                     </div>
                 </div>
             </div>
