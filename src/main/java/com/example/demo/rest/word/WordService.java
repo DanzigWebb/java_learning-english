@@ -32,6 +32,7 @@ public class WordService {
 
         entity.setGroup(group.get());
         entity.setName(word.getName());
+        entity.setAssociate(word.getAssociate());
         entity.setDefinition(word.getDefinition());
 
         return wordMapper.toModel(wordRepo.save(entity));

@@ -32,7 +32,7 @@ export const GroupsRow: Component = () => {
 
     const getGroupsDto = async () => {
         const response = await getGroups();
-        return response.data;
+        return response.data.reverse();
     };
 
     const toggleArchived = async (group: WordGroupDto) => {
