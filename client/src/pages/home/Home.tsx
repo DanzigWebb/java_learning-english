@@ -3,6 +3,7 @@ import { Page } from '@root/src/pages';
 import { useNavigate } from 'solid-app-router';
 import { createGroup } from '@services/api';
 import { WordGroupCreateDto } from '@models/words';
+import { PagesPathEnum } from '@root/src/pages/pages.type';
 
 export const Home: Component = () => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const Home: Component = () => {
                     name: name(),
                 };
                 await createGroup(group);
-                navigate('/groups');
+                navigate(`/${PagesPathEnum.GROUPS}`);
             } catch (e) {
                 // Todo: An error alert should be shown there
             }
