@@ -45,7 +45,7 @@ export const getControlValue = (input: FormControl): any => {
         case 'number':
             return Number(input.value);
         case 'checkbox':
-            return Boolean(input.value);
+            return Boolean((input as HTMLInputElement).checked);
         default:
             return input.value;
     }
