@@ -64,7 +64,7 @@ export const GroupCard: Component<Props> = (props) => {
     };
 
     return (
-        <div class={`card shadow-xl relative ${props.class || ''}`}>
+        <div class={`card shadow-xl relative rounded-lg ${props.class || ''}`}>
             <GroupCardHeader
                 done={done()}
                 group={group()}

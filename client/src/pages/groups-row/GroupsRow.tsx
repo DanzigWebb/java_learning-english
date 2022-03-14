@@ -71,7 +71,7 @@ export const GroupsRow: Component = () => {
                                     <div class="h-full inline-block m-1 align-top whitespace-nowrap transition-all list-item">
                                         <GroupCard
                                             group={group}
-                                            class="w-80 bg-base-300 max-h-full"
+                                            class="w-80 bg-base-200 max-h-full"
                                             onCreate={onCreateWord}
                                             onArchived={toggleArchived}
                                         />

@@ -57,10 +57,11 @@ export const GroupsRowHeader: Component<Props> = (props) => {
         <>
             <header class="p-4">
                 <form onInput={valueChange} className="flex items-center gap-2 pb-4">
+                    <p>Filters: </p>
                     <input
                         type="text"
                         autocomplete="off"
-                        placeholder="Searching by name..."
+                        placeholder="Word or group name..."
                         class="input input-ghost bg-base-200"
                         {...register('name')}
                     />
@@ -78,7 +79,7 @@ export const GroupsRowHeader: Component<Props> = (props) => {
 
                     <Tooltip message="Create group">
                         <button
-                            class="btn btn-circle btn-md gap-2"
+                            class="btn btn-circle btn-sm btn-accent gap-2"
                             type="button"
                             onClick={openModal}
                         >

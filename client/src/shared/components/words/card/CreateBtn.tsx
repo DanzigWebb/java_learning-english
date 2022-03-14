@@ -49,7 +49,7 @@ export const CreateBtn: Component<Props> = (props) => {
 
     return (
         <>
-            <div class="sticky bottom-0 bg-base-200">
+            <div class="sticky bottom-0 bg-base-300">
                 <button
                     class="btn btn-primary btn-ghost gap-2 w-full"
                     onClick={open}
