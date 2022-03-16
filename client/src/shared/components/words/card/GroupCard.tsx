@@ -1,10 +1,23 @@
-import { Component, createMemo, createSignal, For } from 'solid-js';
+import { Component, createMemo, createSignal, For, Show } from 'solid-js';
 import { WordCreateDto, WordDto, WordGroupDto } from '@models/words';
 import { createWord, updateWord } from '@api/index';
 import { CreateBtn, WordGroupAddControls } from './CreateBtn';
 import { Word } from './Word';
 import { GroupCardHeader } from './GroupCardHeader';
+import {
+    closestLayoutCenter,
+    DragDropProvider,
+    DragDropSensors,
+    DragOverlay,
+    SortableProvider
+} from '@thisbeyond/solid-dnd';
+import { DragEventHandler } from '@thisbeyond/solid-dnd/dist/types/drag-drop-context';
+import { WordSortable } from '@shared/components/words/card/WordSortable';
+import { ScaleTransition } from '@root/src/lib/transitions';
 
+interface DraggableWordDto extends WordDto {
+    dragEnter?: boolean;
+}
 
 type Props = {
     group: WordGroupDto;
@@ -22,8 +35,12 @@ type Props = {
 export const GroupCard: Component<Props> = (props) => {
 
     const group = createMemo(() => props.group);
-    const [words, setWords] = createSignal(group()?.words || [])
+    const [words, setWords] = createSignal<DraggableWordDto[]>(group()?.words || []);
     const [done, setDone] = createSignal(isDone(props.group.words));
+    const [activeItem, setActiveItem] = createSignal<WordDto | null>(null);
+    const ids = () => words().map(w => w.id);
+
+    const [dragRefs, setDragRefs] = createSignal<HTMLElement[]>([]);
 
     /**
      * Awaits request of create word
@@ -33,7 +50,7 @@ export const GroupCard: Component<Props> = (props) => {
         const groupId = props.group.id;
         const dto: WordCreateDto = {groupId, name, definition, associate};
         const response = await createWord(dto);
-        setWords((words) => [...words, response.data])
+        setWords((words) => [...words, response.data]);
 
         props.onCreate?.(response.data);
     };
@@ -65,6 +82,45 @@ export const GroupCard: Component<Props> = (props) => {
         props.onArchived?.(group);
     };
 
+    const onDragStart: DragEventHandler = ({draggable}) => {
+        resetTransition();
+        setActiveItem(words().find(w => w.id == draggable.id) || null);
+    };
+
+    const onDragEnd: DragEventHandler = ({draggable, droppable}) => {
+        addTransition();
+
+        if (draggable && droppable) {
+            const currentItems = words();
+            const fromIndex = currentItems.findIndex(w => w.id === draggable.id);
+            const toIndex = currentItems.findIndex(w => w.id === droppable.id);
+            if (fromIndex !== toIndex) {
+                const updatedItems = currentItems.slice();
+                updatedItems.splice(toIndex, 0, ...updatedItems.splice(fromIndex, 1));
+                setWords(updatedItems);
+            }
+        }
+        setActiveItem(null);
+    };
+
+    const addTransition = () => {
+        dragRefs().forEach(ref => {
+            const el = ref.querySelector('.sortable') as HTMLElement;
+            if (el) {
+                el.style.transition = '0s';
+            }
+        });
+    };
+
+    const resetTransition = () => {
+        dragRefs().forEach(ref => {
+            const el = ref.querySelector('.sortable') as HTMLElement;
+            if (el) {
+                el.removeAttribute('style');
+            }
+        });
+    };
+
     return (
         <div class={`card shadow-xl relative rounded-lg ${props.class || ''}`}>
             <GroupCardHeader
@@ -73,14 +129,34 @@ export const GroupCard: Component<Props> = (props) => {
                 onArchived={archiveGroup}
             />
 
-            <ul class="menu flex-[1_1_auto] overflow-x-hidden overflow-y-auto">
-                <For each={words()}>
-                    {word => (<>
-                        <Word word={word} toggle={toggleWord}/>
-                        <span className="divider m-0 h-1"/>
-                    </>)}
-                </For>
-            </ul>
+            <div class="flex-[1_1_auto] overflow-x-hidden overflow-y-auto">
+                <DragDropProvider
+                    onDragStart={onDragStart}
+                    onDragEnd={onDragEnd}
+                    collisionDetectionAlgorithm={closestLayoutCenter}
+                >
+                    <DragDropSensors/>
+                    <SortableProvider ids={ids()}>
+                        <For each={words()}>
+                            {word => (
+                                <div ref={ref => setDragRefs([...dragRefs(), ref])}>
+                                    <WordSortable word={word} toggle={toggleWord}/>
+                                </div>
+                            )}
+                        </For>
+                    </SortableProvider>
+
+                    <DragOverlay>
+                        <ScaleTransition>
+                            <Show when={activeItem()}>
+                                <div class="bg-base-100 rounded shadow-2xl p-2">
+                                    <Word word={activeItem()!}/>
+                                </div>
+                            </Show>
+                        </ScaleTransition>
+                    </DragOverlay>
+                </DragDropProvider>
+            </div>
 
             <CreateBtn
                 onSubmit={fetchCreateWord}

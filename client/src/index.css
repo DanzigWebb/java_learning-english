@@ -46,3 +46,12 @@
 .list-item-exit-active {
     position: absolute;
 }
+
+.fade-enter-active,
+.fade-exit-active {
+    transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-exit-to {
+    opacity: 0;
+}

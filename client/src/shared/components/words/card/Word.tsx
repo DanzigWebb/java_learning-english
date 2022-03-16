@@ -9,10 +9,8 @@ type Props = {
 
 /**
  * Displays WordDto of the list item in GroupCard
- * @note This component is part of the menu element (ul.menu)
  */
 export const Word: Component<Props> = (props) => {
-
     const [word, setWord] = createSignal(props.word);
 
     /**
@@ -26,26 +24,28 @@ export const Word: Component<Props> = (props) => {
     };
 
     return (
-        <li onClick={toggle}>
-            <Tooltip class="w-full" message={word().definition} placement="right">
-                <div class="flex items-center justify-between">
-                    <div className="flex flex-col overflow-x-hidden">
-                        <p class="capitalize" classList={{'line-through': word().done}}>
-                            {word().name}
-                        </p>
-                        <i class="text-sm opacity-80 truncate">{word().associate || '...'}</i>
-                    </div>
+        <div class="flex items-center justify-between w-full">
+            <div class="flex flex-col flex-1 pb-2 overflow-x-hidden">
+                <Tooltip message={word().definition} placement="right">
+                    <p class="capitalize" classList={{'line-through': word().done}}>
+                        {word().name}
+                    </p>
+                </Tooltip>
 
-                    <input
-                        type="checkbox"
-                        class="toggle toggle-xs shrink"
-                        classList={{
-                            'toggle-accent': word().done
-                        }}
-                        checked={word().done}
-                    />
-                </div>
-            </Tooltip>
-        </li>
+                <i class="text-sm opacity-80 truncate">{word().associate || '...'}</i>
+            </div>
+
+            <div class="flex items-center gap-1">
+                <input
+                    onClick={toggle}
+                    type="checkbox"
+                    class="toggle toggle-xs shrink"
+                    classList={{
+                        'toggle-accent': word().done
+                    }}
+                    checked={word().done}
+                />
+            </div>
+        </div>
     );
 };

@@ -337,6 +337,11 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
   integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
+"@thisbeyond/solid-dnd@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@thisbeyond/solid-dnd/-/solid-dnd-0.4.2.tgz#0600cb4969d950dcc4ca8dc497ef3b59773eb6ba"
+  integrity sha512-d1J/jFjq1YaZsxpC0lkNuuznUeePTQycZK71+19hQqvmDNc/QYEnJ+TETefGtQiy1rc7BrvjFQAgegN/G6ueEg==
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.8.tgz#c1e4e80d6f964fbecb3359c43bd48b40f7cadad9"

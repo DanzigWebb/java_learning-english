@@ -17,7 +17,7 @@ export const GroupsRowHeader: Component<Props> = (props) => {
     const {register, getValues} = createForm<Controls>({
         defaultValues: {
             name: '',
-            archived: true
+            archived: false
         }
     });
 
