@@ -10,6 +10,7 @@ export interface WordDto {
     createAt: string;
     updateAt: string;
 
+    rank: string;
     associate: string;
 }
 
@@ -19,6 +20,7 @@ export interface WordCreateDto {
     definition: string;
     associate?: string;
     done?: boolean;
+    rank?: string;
 }
 
 /**

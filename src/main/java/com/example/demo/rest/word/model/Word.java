@@ -15,6 +15,8 @@ public class Word {
     private String associate;
     private Boolean done;
 
+    private String rank;
+
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 }

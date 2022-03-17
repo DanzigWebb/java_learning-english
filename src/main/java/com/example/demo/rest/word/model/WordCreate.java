@@ -15,4 +15,5 @@ public class WordCreate {
     String definition;
     String associate;
     Boolean done;
+    String rank;
 }

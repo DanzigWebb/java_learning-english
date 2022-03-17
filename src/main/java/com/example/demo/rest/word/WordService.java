@@ -50,6 +50,7 @@ public class WordService {
         entity.setName(word.getName());
         entity.setDefinition(word.getDefinition());
         entity.setDone(word.getDone());
+        entity.setRank(word.getRank());
 
         return wordMapper.toModel(wordRepo.save(entity));
     }

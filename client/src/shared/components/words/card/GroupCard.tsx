@@ -14,10 +14,7 @@ import {
 import { DragEventHandler } from '@thisbeyond/solid-dnd/dist/types/drag-drop-context';
 import { WordSortable } from '@shared/components/words/card/WordSortable';
 import { ScaleTransition } from '@root/src/lib/transitions';
-
-interface DraggableWordDto extends WordDto {
-    dragEnter?: boolean;
-}
+import { LexoRank } from 'lexorank';
 
 type Props = {
     group: WordGroupDto;
@@ -25,6 +22,16 @@ type Props = {
     onCreate?: (dto: WordDto) => void;
     onArchived?: (dto: WordGroupDto) => void;
 }
+
+const sortWords = (words: WordDto[]) => words.sort((a, b) => {
+    if (a.rank > b.rank) {
+        return 1;
+    }
+    if (a.rank < b.rank) {
+        return -1;
+    }
+    return 0;
+});
 
 /**
  * Card of word's group
@@ -35,12 +42,23 @@ type Props = {
 export const GroupCard: Component<Props> = (props) => {
 
     const group = createMemo(() => props.group);
-    const [words, setWords] = createSignal<DraggableWordDto[]>(group()?.words || []);
+    const [words, setWords] = createSignal<WordDto[]>(sortWords(group()?.words || []));
     const [done, setDone] = createSignal(isDone(props.group.words));
     const [activeItem, setActiveItem] = createSignal<WordDto | null>(null);
     const ids = () => words().map(w => w.id);
 
     const [dragRefs, setDragRefs] = createSignal<HTMLElement[]>([]);
+
+
+    // setDefaultRank()
+    // async function setDefaultRank() {
+    //     let rank = LexoRank.middle();
+    //     for (let w of group().words) {
+    //         w.rank = rank.toString();
+    //         await updateWord(w, w.id);
+    //         rank = rank.genNext();
+    //     }
+    // }
 
     /**
      * Awaits request of create word
@@ -94,7 +112,14 @@ export const GroupCard: Component<Props> = (props) => {
             const currentItems = words();
             const fromIndex = currentItems.findIndex(w => w.id === draggable.id);
             const toIndex = currentItems.findIndex(w => w.id === droppable.id);
+
             if (fromIndex !== toIndex) {
+                const position = getPosition(toIndex, currentItems);
+
+                const current = currentItems[fromIndex];
+                current.rank = position.toString();
+                updateWord(current, current.id);
+
                 const updatedItems = currentItems.slice();
                 updatedItems.splice(toIndex, 0, ...updatedItems.splice(fromIndex, 1));
                 setWords(updatedItems);
@@ -164,3 +189,20 @@ export const GroupCard: Component<Props> = (props) => {
         </div>
     );
 };
+
+function getPosition(toIndex: number, words: WordDto[]) {
+    const isStart = toIndex === 0;
+    const isEnd = toIndex === words.length - 1;
+
+    if (isStart) {
+        return LexoRank.parse(words[0].rank).genPrev();
+    }
+
+    if (isEnd) {
+        return LexoRank.parse(words[words.length - 1].rank).genNext();
+    }
+
+    const prevItem = LexoRank.parse(words[toIndex - 1].rank);
+    const nextItem = LexoRank.parse(words[toIndex + 1].rank);
+    return prevItem.between(nextItem);
+}

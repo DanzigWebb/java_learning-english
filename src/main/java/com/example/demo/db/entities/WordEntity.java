@@ -21,6 +21,8 @@ public class WordEntity extends BaseEntity {
 
     private Boolean done;
 
+    private String rank;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private WordGroupEntity group;
 }
