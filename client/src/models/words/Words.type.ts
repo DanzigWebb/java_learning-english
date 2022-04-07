@@ -15,7 +15,7 @@ export interface WordDto {
 }
 
 export interface WordCreateDto {
-    groupId: string;
+    groupId?: string;
     name: string;
     definition: string;
     associate?: string;

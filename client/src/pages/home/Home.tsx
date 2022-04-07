@@ -1,8 +1,8 @@
 import { Component, createSignal } from 'solid-js';
 import { Page } from '@root/src/pages';
 import { useNavigate } from 'solid-app-router';
-import { createGroup } from '@services/api';
-import { WordGroupCreateDto } from '@models/words';
+import { createWord } from '@services/api';
+import { WordCreateDto } from '@models/words';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 
 export const Home: Component = () => {
@@ -14,11 +14,12 @@ export const Home: Component = () => {
         e.preventDefault();
         if (name().length) {
             try {
-                const group: WordGroupCreateDto = {
+                const group: WordCreateDto = {
                     name: name(),
+                    definition: '',
                 };
-                await createGroup(group);
-                navigate(`/${PagesPathEnum.GROUPS}`);
+                await createWord(group);
+                navigate(`/${PagesPathEnum.WORDS}`);
             } catch (e) {
                 // Todo: An error alert should be shown there
             }
@@ -39,14 +40,13 @@ export const Home: Component = () => {
                 <form className="card-body">
                     <div class="opacity-90 mb-4">
                         <h3 class="text-xl font-semibold pb-2">Создайте новую группу</h3>
-                        <p class="text-sm opacity-80">Соберите в группе неизвестные иностранные слова, объедененные по
-                            смыслу</p>
+                        <p class="text-sm opacity-80">Соберите свой список незнакомых слов на английском языке</p>
                     </div>
 
                     <input
                         type="text"
                         class="input mb-2"
-                        placeholder="Транспорт"
+                        placeholder="Home"
                         value={name()}
                         onInput={e => setName((e.target as HTMLInputElement).value)}
                     />
@@ -56,7 +56,7 @@ export const Home: Component = () => {
                         disabled={name().length === 0}
                         onClick={onSubmit}
                     >
-                        Создайте свою доску
+                        Добавьте новое слово
                     </button>
                 </form>
             </div>

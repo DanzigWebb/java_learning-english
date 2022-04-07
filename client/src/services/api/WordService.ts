@@ -10,3 +10,7 @@ export const createWord = (dto: WordCreateDto) => {
 export const updateWord = (dto: WordCreateDto, wordId: string) => {
     return httpClient.put<WordDto>(`${url}/${wordId}`, dto);
 };
+
+export const getWords = () => {
+    return httpClient.get<WordDto[]>(`${url}/all`)
+}
