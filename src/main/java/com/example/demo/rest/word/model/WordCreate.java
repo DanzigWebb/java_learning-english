@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class WordCreate {
 
-    @NotNull
     String groupId;
 
     @NotNull

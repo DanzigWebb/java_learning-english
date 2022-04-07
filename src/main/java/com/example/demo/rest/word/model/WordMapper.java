@@ -11,8 +11,11 @@ public class WordMapper extends BaseMapper<Word, WordEntity> {
     public Word toModel(WordEntity entity) {
         var word = new Word();
 
+        if (entity.getGroup() != null) {
+            word.setGroupId(entity.getGroup().getId().toString());
+        }
+
         word.setId(entity.getId().toString());
-        word.setGroupId(entity.getGroup().getId().toString());
         word.setName(entity.getName());
         word.setDefinition(entity.getDefinition());
         word.setAssociate(entity.getAssociate());

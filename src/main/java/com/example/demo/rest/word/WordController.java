@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller()
 @RequestMapping("api/v1/word")
 @Validated
@@ -34,5 +36,11 @@ public class WordController {
             @Valid @RequestBody WordCreate word
     ) {
         return wordService.update(word, id);
+    }
+
+    @GetMapping("/all")
+    public @ResponseBody
+    List<Word> getAll() {
+        return wordService.getAll();
     }
 }

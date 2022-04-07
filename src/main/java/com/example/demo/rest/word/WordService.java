@@ -9,6 +9,8 @@ import com.example.demo.rest.word.model.WordCreate;
 import com.example.demo.rest.word.model.WordMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WordService {
     private final WordRepo wordRepo;
@@ -21,16 +23,18 @@ public class WordService {
         this.wordMapper = wordMapper;
     }
 
+    public List<Word> getAll() {
+        return wordMapper.entityListToModel(wordRepo.findAll());
+    }
+
     public Word create(WordCreate word) {
         var entity = new WordEntity();
 
-        var group = wordGroupRepo.findById(Long.parseLong(word.getGroupId()));
-
-        if (group.isEmpty()) {
-            throw new EntityNotFoundException();
+        if (word.getGroupId() != null) {
+            var group = wordGroupRepo.findById(Long.parseLong(word.getGroupId()));
+            group.ifPresent(entity::setGroup);
         }
 
-        entity.setGroup(group.get());
         entity.setName(word.getName());
         entity.setAssociate(word.getAssociate());
         entity.setDefinition(word.getDefinition());
