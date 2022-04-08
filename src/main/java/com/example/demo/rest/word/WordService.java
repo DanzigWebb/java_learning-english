@@ -7,6 +7,9 @@ import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.rest.word.model.Word;
 import com.example.demo.rest.word.model.WordCreate;
 import com.example.demo.rest.word.model.WordMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +26,10 @@ public class WordService {
         this.wordMapper = wordMapper;
     }
 
-    public List<Word> getAll() {
-        return wordMapper.entityListToModel(wordRepo.findAll());
+    public Page<Word> getAll(int page, int size) {
+        var params = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<WordEntity> entities = wordRepo.findAll(params);
+        return entities.map(wordMapper::toModel);
     }
 
     public Word create(WordCreate word) {

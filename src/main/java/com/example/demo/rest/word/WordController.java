@@ -4,11 +4,11 @@ import com.example.demo.rest.word.model.Word;
 import com.example.demo.rest.word.model.WordCreate;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller()
 @RequestMapping("api/v1/word")
@@ -40,7 +40,10 @@ public class WordController {
 
     @GetMapping("/all")
     public @ResponseBody
-    List<Word> getAll() {
-        return wordService.getAll();
+    Page<Word> getAll(
+            @RequestParam int page,
+            @RequestParam int size
+    ) {
+        return wordService.getAll(page, size);
     }
 }
