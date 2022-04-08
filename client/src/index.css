@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .container {
-    @apply m-auto
+    @apply mx-auto
 }
 
 .overlay {

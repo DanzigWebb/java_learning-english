@@ -2,6 +2,8 @@ import { Component, createSignal, onMount, For } from 'solid-js';
 import { Page } from '@root/src/pages';
 import { getWords, updateWord } from '@services/api';
 import { WordDto } from '@models/words';
+import { PageParams } from '@api/Api.type';
+import { Tooltip } from '@components/tooltip/Tooltip';
 
 /**
  * Todo: refactoring
@@ -13,18 +15,24 @@ import { WordDto } from '@models/words';
  * 2) Добавить разделитель фильтр по датам
  */
 
-async function getAllWords() {
-    const {data} = await getWords();
+type WordsParams = Required<Pick<PageParams, 'page' | 'size'>>;
+
+async function getAllWords(params: PageParams) {
+    const {data} = await getWords(params);
     return data;
 }
 
 export const WordsPage: Component = () => {
 
+    const [params, setParams] = createSignal<WordsParams>({
+        page: 0,
+        size: 40,
+    });
+
     const [words, setWords] = createSignal<WordDto[]>([]);
 
-    onMount(async () => {
-        const words = await getAllWords();
-        setWords(words);
+    onMount(() => {
+        return fetchData();
     });
 
     /**
@@ -34,6 +42,19 @@ export const WordsPage: Component = () => {
         const dto: WordDto = {...word, done: !word.done};
         await updateWord(dto, dto.id);
     };
+
+    async function fetchData() {
+        const page = await getAllWords(params());
+        setWords(state => state.concat(page.content));
+    }
+
+    async function nextChunk() {
+        setParams(state => ({
+            ...state,
+            page: params().page + 1
+        }));
+        return fetchData();
+    }
 
     return (
         <Page full>
@@ -75,6 +96,14 @@ export const WordsPage: Component = () => {
                         </For>
                         </tbody>
                     </table>
+
+                    <div class="w-full flex justify-center">
+                        <Tooltip message="Download more">
+                            <button class="btn btn-circle" onClick={nextChunk}>
+                                <i class="fa-solid fa-plus"/>
+                            </button>
+                        </Tooltip>
+                    </div>
                 </div>
             </div>
         </Page>
