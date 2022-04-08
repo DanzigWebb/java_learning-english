@@ -47,14 +47,19 @@ public class WordService {
         return wordMapper.toModel(wordRepo.save(entity));
     }
 
-    public Word update(WordCreate word, Long id) {
-        var repoEntity = wordRepo.findByGroupId(id, Long.parseLong(word.getGroupId()));
+    public Word update(WordCreate word, Long wordId) {
+        var repoEntity = wordRepo.findById(wordId);
 
         if (repoEntity.isEmpty()) {
             throw new EntityNotFoundException();
         }
 
         var entity = repoEntity.get();
+
+        if (word.getGroupId() != null) {
+            var group = wordGroupRepo.findById(Long.parseLong(word.getGroupId()));
+            group.ifPresent(entity::setGroup);
+        }
 
         entity.setName(word.getName());
         entity.setDefinition(word.getDefinition());

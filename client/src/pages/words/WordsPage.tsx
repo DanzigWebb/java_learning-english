@@ -3,15 +3,16 @@ import { Page } from '@root/src/pages';
 import { getWords, updateWord } from '@services/api';
 import { WordDto } from '@models/words';
 import { PageParams } from '@api/Api.type';
-import { Tooltip } from '@components/tooltip/Tooltip';
+import { WordRow } from '@root/src/pages/words/components/WordRow';
+import { Tooltip } from '@root/src/lib/components/tooltip/Tooltip';
 
 /**
  * Todo: refactoring
  * - FE
  * 1) Вынос таблицы в отдельный компонент
- * 2) Вынос строки слова в отдельный компонент
+ * 2) (done) Вынос строки слова в отдельный компонент
  * - BE
- * 1) Реализовать пагинацию
+ * 1) (done) Реализовать пагинацию
  * 2) Добавить разделитель фильтр по датам
  */
 
@@ -39,8 +40,7 @@ export const WordsPage: Component = () => {
      * Updates word's state
      */
     const toggle = async (word: WordDto) => {
-        const dto: WordDto = {...word, done: !word.done};
-        await updateWord(dto, dto.id);
+        await updateWord(word, word.id);
     };
 
     async function fetchData() {
@@ -76,21 +76,7 @@ export const WordsPage: Component = () => {
                             {(word, i) => (
                                 <tr>
                                     <th>{i() + 1}</th>
-                                    <td>{word.name}</td>
-                                    <td>{word.definition}</td>
-                                    <td>
-                                        <div>
-                                            <input
-                                                onClick={() => toggle(word)}
-                                                type="checkbox"
-                                                class="toggle toggle-xs shrink"
-                                                classList={{
-                                                    'toggle-accent': word.done
-                                                }}
-                                                checked={word.done}
-                                            />
-                                        </div>
-                                    </td>
+                                    <WordRow word={word} onUpdate={toggle}/>
                                 </tr>
                             )}
                         </For>
