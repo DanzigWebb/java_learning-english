@@ -17,6 +17,16 @@ export const Header: Component = () => {
                     </Link>
                 </div>
 
+                <div class="flex px-10">
+                    <Link
+                        href={`/${PagesPathEnum.WORDS}`}
+                        class="btn text-sm btn-sm btn-ghost normal-case text-xl"
+                    >
+                        Words
+                    </Link>
+                </div>
+
+
                 <div class="flex-none">
                     <ThemeMenu/>
                 </div>
