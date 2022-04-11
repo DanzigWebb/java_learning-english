@@ -62,7 +62,7 @@ export const WordsPage: Component = () => {
                 <h1 class="text-2xl py-4">Библиотека слов</h1>
                 <div class="divider"/>
                 <div class="overflow-x-auto">
-                    <table class="table w-full table-zebra">
+                    <table class="table table-zebra table-compact w-full">
                         <thead>
                         <tr>
                             <th>#</th>

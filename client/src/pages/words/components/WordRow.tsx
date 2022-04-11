@@ -42,7 +42,7 @@ export const WordRow: Component<Props> = (props) => {
             <td>
                 <input
                     type="text"
-                    class="input input-ghost"
+                    class="input input-ghost h-auto w-full"
                     classList={{
                         'input-error': !!errors.name
                     }}
@@ -57,7 +57,7 @@ export const WordRow: Component<Props> = (props) => {
             <td>
                 <input
                     type="text"
-                    class="input input-ghost"
+                    class="input input-ghost h-auto w-full"
                     value={word().definition}
                     {...register('definition')}
                     onBlur={update}
