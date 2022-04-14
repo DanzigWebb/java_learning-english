@@ -30,8 +30,12 @@ public class WordController {
             @Valid @RequestBody WordCreate word
     ) {
         if (word.getDefinition() == null || word.getDefinition().isEmpty()) {
-            var definition = yandexTranslateService.getWord(word.getName()).getBody();
-            word.setDefinition(definition != null ? definition.getTranslations().get(0).getText() : null);
+            try {
+                var definition = yandexTranslateService.getWord(word.getName()).getBody();
+                word.setDefinition(definition != null ? definition.getTranslations().get(0).getText() : null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return wordService.create(word);
     }
