@@ -13,7 +13,7 @@ type Controls = {
     definition: string;
 }
 
-export const WordRow: Component<Props> = (props) => {
+export const WordTableRow: Component<Props> = (props) => {
     const [word, setWord] = createSignal<WordDto>(props.word);
     const {register, getValues, errors} = createForm<Controls>();
 

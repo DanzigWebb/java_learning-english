@@ -1,16 +1,14 @@
-import { Component, createSignal, onMount, For } from 'solid-js';
+import { Component, createSignal, onMount } from 'solid-js';
 import { Page } from '@root/src/pages';
-import { getWords, updateWord } from '@services/api';
-import { WordDto } from '@models/words';
+import { createWord, getWords } from '@services/api';
+import { WordCreateDto, WordDto } from '@models/words';
 import { PageParams } from '@api/Api.type';
-import { WordRow } from '@root/src/pages/words/components/WordRow';
-import { Tooltip } from '@root/src/lib/components/tooltip/Tooltip';
+import { Tooltip } from 'solidjs-daisy';
+import { WordTable } from '@root/src/pages/words/components/WordTable';
+import { WordCreateModal } from '@root/src/pages/words/components/modal/WordCreateModal';
 
 /**
  * Todo: refactoring
- * - FE
- * 1) Вынос таблицы в отдельный компонент
- * 2) (done) Вынос строки слова в отдельный компонент
  * - BE
  * 1) (done) Реализовать пагинацию
  * 2) Добавить разделитель фильтр по датам
@@ -25,23 +23,16 @@ async function getAllWords(params: PageParams) {
 
 export const WordsPage: Component = () => {
 
+    const [show, setShow] = createSignal<boolean>(false);
+    const [words, setWords] = createSignal<WordDto[]>([]);
     const [params, setParams] = createSignal<WordsParams>({
         page: 0,
         size: 40,
     });
 
-    const [words, setWords] = createSignal<WordDto[]>([]);
-
     onMount(() => {
         return fetchData();
     });
-
-    /**
-     * Updates word's state
-     */
-    const toggle = async (word: WordDto) => {
-        await updateWord(word, word.id);
-    };
 
     async function fetchData() {
         const page = await getAllWords(params());
@@ -56,32 +47,40 @@ export const WordsPage: Component = () => {
         return fetchData();
     }
 
+    function showCreateModal() {
+        setShow(true);
+    }
+
+    async function onCreateWord(dto: WordCreateDto) {
+        setShow(false);
+        await createWord(dto);
+        const page = await getAllWords(params());
+        setWords(page.content);
+    }
+
     return (
         <Page full>
-            <div class="container">
+            <div class="container p-2">
                 <h1 class="text-2xl py-4">Библиотека слов</h1>
+                <div class="flex w-full">
+                    <div class="flex-1"/>
+                    <Tooltip message="Добавить слово">
+                        <button class="btn btn-circle btn-sm" onClick={showCreateModal}>
+                            <i class="fa-solid fa-plus"/>
+                        </button>
+                    </Tooltip>
+
+                    <WordCreateModal
+                        show={show}
+                        setShow={setShow}
+                        onSubmit={onCreateWord}
+                    />
+                </div>
+
                 <div class="divider"/>
                 <div class="overflow-x-auto">
-                    <table class="table table-zebra table-compact w-full">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Название</th>
-                            <th>Перевод</th>
-                            <th>Статус</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <For each={words()}>
-                            {(word, i) => (
-                                <tr>
-                                    <th>{i() + 1}</th>
-                                    <WordRow word={word} onUpdate={toggle}/>
-                                </tr>
-                            )}
-                        </For>
-                        </tbody>
-                    </table>
+
+                    <WordTable words={words()}/>
 
                     <div class="w-full flex justify-center">
                         <Tooltip message="Download more">
