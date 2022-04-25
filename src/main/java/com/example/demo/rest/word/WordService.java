@@ -63,6 +63,7 @@ public class WordService {
 
         entity.setName(word.getName());
         entity.setDefinition(word.getDefinition());
+        entity.setAssociate(word.getAssociate());
         entity.setDone(word.getDone());
         entity.setRank(word.getRank());
 
