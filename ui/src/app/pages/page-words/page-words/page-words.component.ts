@@ -11,7 +11,10 @@ export class PageWordsComponent implements OnInit {
 
   displayedColumns = ['name', 'associate', 'definition', 'done'];
 
-  words$ = this.words.getAll();
+  words$ = this.words.getAll({
+    page: 0,
+    size: 50
+  });
 
   constructor(
     private words: WordsService
