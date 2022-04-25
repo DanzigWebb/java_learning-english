@@ -8,7 +8,7 @@ import { WordsService } from '@shared/words/words.service';
 })
 export class PageWordsComponent implements OnInit {
 
-  displayedColumns = ['name', 'definition', 'done'];
+  displayedColumns = ['name', 'associate', 'definition', 'done'];
 
   words$ = this.words.getAll();
 

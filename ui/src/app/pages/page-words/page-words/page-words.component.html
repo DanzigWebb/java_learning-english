@@ -1,16 +1,35 @@
 <div class="p-4">
+
+  <header class="flex mb-5">
+
+    <div class="flex-1"></div>
+    <button mat-icon-button matTooltip="Add new word">
+      <mat-icon>add</mat-icon>
+    </button>
+  </header>
+
   <table
-    style="width: 100%;"
     mat-table
     *ngIf="words$ | async as words"
     [dataSource]="words.content"
-    class="mat-elevation-z8"
+    class="mat-elevation-z8 w-full"
   >
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="name" sticky>
       <th mat-header-cell *matHeaderCellDef> Name</th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td mat-cell *matCellDef="let element">
+        <div class="flex flex-col">
+          <span class="capitalize">{{element.name}}</span>
+          <span class="text-xs opacity-75">{{element.createAt | date}}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- associate Column -->
+    <ng-container matColumnDef="associate">
+      <th mat-header-cell *matHeaderCellDef>Associate</th>
+      <td mat-cell *matCellDef="let element"> {{element.associate}} </td>
     </ng-container>
 
     <!-- Definition Column -->
