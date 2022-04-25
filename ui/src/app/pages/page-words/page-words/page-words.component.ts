@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WordsService } from '@shared/words/words.service';
+import { WordDto } from '@models/word';
 
 @Component({
   selector: 'app-page-words',
@@ -17,5 +18,9 @@ export class PageWordsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  updateWord(word: WordDto) {
+    this.words.update(word).subscribe();
   }
 }
