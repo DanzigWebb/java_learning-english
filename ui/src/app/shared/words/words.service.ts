@@ -15,7 +15,7 @@ export class WordsService {
   ) { }
 
   create(dto: WordCreateDto) {
-    return this.http.post(this.url, dto);
+    return this.http.post<WordDto>(this.url, dto);
   }
 
   update(dto: WordDto) {

@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Creating new word</h1>
+<div mat-dialog-content>
+  <div class="md:w-80">
+    <app-create-word-form
+      [(word)]="word"
+      [(valid)]="valid">
+    </app-create-word-form>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="flex w-full">
+    <div class="flex-1"></div>
+    <button mat-button color="warn" mat-dialog-close>Close</button>
+    <button mat-flat-button color="accent" [disabled]="!valid" (click)="submit()">Submit</button>
+  </div>
+</div>

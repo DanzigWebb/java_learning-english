@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WordsService } from '@shared/words/words.service';
 import { WordDto } from '@models/word';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateWordFormDialogComponent } from '@words/components';
 
 @Component({
   selector: 'app-page-words',
@@ -11,13 +13,11 @@ export class PageWordsComponent implements OnInit {
 
   displayedColumns = ['name', 'associate', 'definition', 'done'];
 
-  words$ = this.words.getAll({
-    page: 0,
-    size: 50
-  });
+  words$ = this.getAllWords();
 
   constructor(
-    private words: WordsService
+    private words: WordsService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -25,5 +25,22 @@ export class PageWordsComponent implements OnInit {
 
   updateWord(word: WordDto) {
     this.words.update(word).subscribe();
+  }
+
+  create() {
+    this.dialog.open(CreateWordFormDialogComponent)
+      .afterClosed()
+      .subscribe((data: WordDto | undefined) => {
+        if (data) {
+          this.words$ = this.getAllWords();
+        }
+      });
+  }
+
+  private getAllWords() {
+    return this.words.getAll({
+      page: 0,
+      size: 50
+    });
   }
 }

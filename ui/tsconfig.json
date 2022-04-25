@@ -24,7 +24,8 @@
     ],
     "paths": {
       "@models/*": ["./src/app/models/*"],
-      "@shared/*": ["./src/app/shared/*"]
+      "@shared/*": ["./src/app/shared/*"],
+      "@words/*": ["./src/app/shared/words/*"],
     }
   },
   "angularCompilerOptions": {
