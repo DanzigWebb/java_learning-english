@@ -5,6 +5,8 @@ import { MatListModule } from '@angular/material/list';
 import { PageWordsRoutingModule } from './page-words-routing.module';
 import { PageWordsComponent } from './page-words/page-words.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { MatTableModule } from '@angular/material/table';
     CommonModule,
     PageWordsRoutingModule,
     MatListModule,
-    MatTableModule
+    MatTableModule,
+    MatSlideToggleModule,
+    FormsModule
   ]
 })
 export class PageWordsModule {}

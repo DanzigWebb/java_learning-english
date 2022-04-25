@@ -21,7 +21,11 @@
   <!-- done Column -->
   <ng-container matColumnDef="done">
     <th mat-header-cell *matHeaderCellDef> done</th>
-    <td mat-cell *matCellDef="let element"> {{element.done}} </td>
+    <td mat-cell *matCellDef="let element">
+      <mat-slide-toggle
+        [(ngModel)]="element.done">
+      </mat-slide-toggle>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
