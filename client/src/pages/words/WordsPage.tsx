@@ -2,7 +2,7 @@ import { Component, createSignal, onMount } from 'solid-js';
 import { Page } from '@root/src/pages';
 import { createWord, getWords, GetWordsParams } from '@services/api';
 import { WordCreateDto, WordDto } from '@models/words';
-import { Tooltip } from '@solsy/ui';
+import { Button, Tooltip } from '@solsy/ui';
 import { WordCreateModal, WordsFilter, WordTable } from '@root/src/pages/words/components';
 
 /**
@@ -76,10 +76,10 @@ export const WordsPage: Component = () => {
 
                     <div class="flex-1"/>
 
-                    <Tooltip message="Добавить слово">
-                        <button class="btn btn-circle btn-sm" onClick={showCreateModal}>
+                    <Tooltip message="Добавить слово" class="flex items-center">
+                        <Button circle size="sm" onClick={showCreateModal}>
                             <i class="fa-solid fa-plus"/>
-                        </button>
+                        </Button>
                     </Tooltip>
 
                     <WordCreateModal
@@ -94,11 +94,11 @@ export const WordsPage: Component = () => {
 
                     <WordTable words={words()}/>
 
-                    <div class="w-full flex justify-center">
+                    <div class="w-full flex justify-center py-2">
                         <Tooltip message="Download more">
-                            <button class="btn btn-circle" onClick={nextChunk}>
+                            <Button circle onClick={nextChunk}>
                                 <i class="fa-solid fa-plus"/>
-                            </button>
+                            </Button>
                         </Tooltip>
                     </div>
                 </div>
