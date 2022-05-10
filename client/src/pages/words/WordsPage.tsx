@@ -1,11 +1,9 @@
 import { Component, createSignal, onMount } from 'solid-js';
 import { Page } from '@root/src/pages';
-import { createWord, getWords } from '@services/api';
+import { createWord, getWords, GetWordsParams } from '@services/api';
 import { WordCreateDto, WordDto } from '@models/words';
-import { PageParams } from '@api/Api.type';
-import { WordTable } from '@root/src/pages/words/components/WordTable';
-import { WordCreateModal } from '@root/src/pages/words/components/modal/WordCreateModal';
 import { Tooltip } from '@solsy/ui';
+import { WordCreateModal, WordsFilter, WordTable } from '@root/src/pages/words/components';
 
 /**
  * Todo: refactoring
@@ -13,10 +11,9 @@ import { Tooltip } from '@solsy/ui';
  * 1) (done) Реализовать пагинацию
  * 2) Добавить разделитель фильтр по датам
  */
+type WordsParams = Required<Pick<GetWordsParams, 'page' | 'size' | 'name'>>;
 
-type WordsParams = Required<Pick<PageParams, 'page' | 'size'>>;
-
-async function getAllWords(params: PageParams) {
+async function getAllWords(params: WordsParams) {
     const {data} = await getWords(params);
     return data;
 }
@@ -27,16 +24,17 @@ export const WordsPage: Component = () => {
     const [words, setWords] = createSignal<WordDto[]>([]);
     const [params, setParams] = createSignal<WordsParams>({
         page: 0,
-        size: 40,
+        size: 4,
+        name: '',
     });
 
-    onMount(() => {
-        return fetchData();
-    });
-
-    async function fetchData() {
-        const page = await getAllWords(params());
+    onMount(async () => {
+        const page = await fetchData();
         setWords(state => state.concat(page.content));
+    });
+
+    function fetchData() {
+        return getAllWords(params());
     }
 
     async function nextChunk() {
@@ -44,7 +42,17 @@ export const WordsPage: Component = () => {
             ...state,
             page: params().page + 1
         }));
-        return fetchData();
+        const page = await fetchData();
+        return setWords(state => state.concat(page.content));
+    }
+
+    async function updateFilters(filters: WordsFilter) {
+        const {name} = filters;
+        if (name !== params().name) {
+            setParams(() => ({page: 0, size: 4, name}));
+            const page = await fetchData();
+            setWords(page.content);
+        }
     }
 
     function showCreateModal() {
@@ -63,7 +71,11 @@ export const WordsPage: Component = () => {
             <div class="container p-2">
                 <h1 class="text-2xl py-4">Библиотека слов</h1>
                 <div class="flex w-full">
+
+                    <WordsFilter onInput={updateFilters}/>
+
                     <div class="flex-1"/>
+
                     <Tooltip message="Добавить слово">
                         <button class="btn btn-circle btn-sm" onClick={showCreateModal}>
                             <i class="fa-solid fa-plus"/>

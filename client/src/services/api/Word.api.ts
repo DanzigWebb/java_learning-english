@@ -12,7 +12,11 @@ export const updateWord = (dto: WordCreateDto, wordId: string) => {
     return httpClient.put<WordDto>(`${url}/${wordId}`, dto);
 };
 
-export const getWords = (params: PageParams = {page: 0, size: 10}) => {
+export interface GetWordsParams extends PageParams {
+    name?: string;
+}
+
+export const getWords = (params: GetWordsParams = {page: 0, size: 10}) => {
     return httpClient.get<Page<WordDto>>(`${url}/all`, {
         params
     });
