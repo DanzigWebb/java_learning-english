@@ -1025,10 +1025,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@solsy/ui@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@solsy/ui/-/ui-0.0.2.tgz#40c7e26802fdbd3b77c2717769cd428e3dcd901f"
-  integrity sha512-oezXvKkmao8lhTFOOVkYdAhEnhXDHUjD5UDAIR0buM7W8ZVvYLFg2gZDsjJZNJkby4+BfqK4GNB6fTaqBH7d6A==
+"@solsy/ui@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@solsy/ui/-/ui-0.0.3.tgz#50964623e7af3177b1ca0077beb4ec3a46ebfe6d"
+  integrity sha512-SBF8Vrm2VSRAolU1m6HigROpilHiY/5UJSEGqvCj+4R49ceAkFcrjtQUT7eCj+QszVtY7OTQL3Z8ff5q31/IOw==
   dependencies:
     "@popperjs/core" "^2.11.5"
     rollup "^2.28.2"
@@ -1356,7 +1356,7 @@ cssesc@^3.0.0:
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
-daisyui@^2.13.6:
+daisyui@2.14.3:
   version "2.14.3"
   resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-2.14.3.tgz#3d3ce0d7f75c41af949c163f0709fde95370c591"
   integrity sha512-EH6cLLaieInq81ACE8FxHsWLsH08sZ62zLxctIHTnLhn0eHvtHdLYZ6yngsy7yd43ZFOstzbyYY4q5xByZdaQQ==
