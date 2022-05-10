@@ -13,7 +13,7 @@ import {
 } from '@thisbeyond/solid-dnd';
 import { DragEventHandler } from '@thisbeyond/solid-dnd/dist/types/drag-drop-context';
 import { WordSortable } from '@shared/components/words/card/WordSortable';
-import { ScaleTransition } from '@root/src/lib/transitions';
+import { ScaleTransition } from '@solsy/ui';
 import { LexoRank } from 'lexorank';
 
 type Props = {

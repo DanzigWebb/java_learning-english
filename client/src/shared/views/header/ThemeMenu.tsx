@@ -1,6 +1,6 @@
 import { Component, createSignal } from 'solid-js';
-import { Tooltip } from '@components/tooltip/Tooltip';
-import { Menu, MenuOption } from '@components/menu';
+import { Tooltip } from '@solsy/ui';
+import { Menu, MenuOption } from '@solsy/ui';
 import { Theme, useApp } from '@root/src/shared/providers/AppProvider';
 
 export const ThemeMenu: Component = () => {

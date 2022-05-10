@@ -3,9 +3,9 @@ import { Page } from '@root/src/pages';
 import { createWord, getWords } from '@services/api';
 import { WordCreateDto, WordDto } from '@models/words';
 import { PageParams } from '@api/Api.type';
-import { Tooltip } from 'solidjs-daisy';
 import { WordTable } from '@root/src/pages/words/components/WordTable';
 import { WordCreateModal } from '@root/src/pages/words/components/modal/WordCreateModal';
+import { Tooltip } from '@solsy/ui';
 
 /**
  * Todo: refactoring
@@ -71,8 +71,8 @@ export const WordsPage: Component = () => {
                     </Tooltip>
 
                     <WordCreateModal
-                        show={show}
-                        setShow={setShow}
+                        show={show()}
+                        onClose={() => setShow(false)}
                         onSubmit={onCreateWord}
                     />
                 </div>

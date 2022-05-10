@@ -1,6 +1,6 @@
 import { Component, createSignal } from 'solid-js';
 import { WordDto } from '@models/words';
-import { Tooltip } from '@components/tooltip/Tooltip';
+import { Tooltip } from '@solsy/ui';
 
 type Props = {
     word: WordDto;

@@ -1,8 +1,8 @@
 import { Component } from 'solid-js';
-import { FormField } from '@components/form/group/FormField';
+import { FormField } from '@solsy/ui';
 import { Validators } from '@root/src/lib/form/validators/validators';
-import { FormError } from '@components/form/group/FormError';
-import { Modal } from '@components/modal';
+import { FormError } from '@solsy/ui';
+import { Modal } from '@solsy/ui';
 import { createForm } from '@root/src/lib/form/createForm';
 
 export type CreateWordControls = {

@@ -1,5 +1,5 @@
 import { Component, createEffect, createSignal, For } from 'solid-js';
-import { Alert, AlertType } from '@components/alert/Alert';
+import { Alert, AlertType } from '@solsy/ui';
 
 export type AlertProp = {
     type: AlertType;

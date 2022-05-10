@@ -1,8 +1,8 @@
 import { Component, createSignal } from 'solid-js';
-import { Menu } from '@components/menu';
-import { FormField } from '@components/form/group/FormField';
+import { Menu } from '@solsy/ui';
+import { FormField } from '@solsy/ui';
 import { Validators } from '@root/src/lib/form/validators/validators';
-import { FormError } from '@components/form/group/FormError';
+import { FormError } from '@solsy/ui';
 import { createForm } from '@root/src/lib/form/createForm';
 
 export type WordGroupAddControls = {
@@ -65,7 +65,6 @@ export const CreateBtn: Component<Props> = (props) => {
                 isShow={show()}
                 onBackdropClick={close}
                 reference={reference()}
-                autoWidth={true}
             >
                 <form className="flex flex-col p-4" onSubmit={submit(onSubmit)}>
                     <FormField>

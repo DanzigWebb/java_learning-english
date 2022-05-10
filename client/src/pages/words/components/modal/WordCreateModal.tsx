@@ -1,9 +1,8 @@
-import { Accessor, Component, Setter } from 'solid-js';
+import { Component, createEffect } from 'solid-js';
 import { createForm } from '@root/src/lib/form/createForm';
-import { FormField } from '@components/form/group/FormField';
 import { Validators } from '@root/src/lib/form/validators/validators';
-import { FormError } from '@components/form/group/FormError';
-import { Modal } from '@components/modal';
+import { Modal } from '@solsy/ui';
+import { FormField, FormError } from '@solsy/ui';
 
 type Controls = {
     name: string;
@@ -12,20 +11,25 @@ type Controls = {
 }
 
 type Props = {
-    show: Accessor<boolean>;
-    setShow: Setter<boolean>;
+    show: boolean;
+    onClose: () => void;
     onSubmit: (c: Controls) => void;
 }
 
 export const WordCreateModal: Component<Props> = (props) => {
     const {register, errors, submit} = createForm<Controls>();
 
+
+    createEffect(() => {
+        console.log('on change');
+    })
+
     function onSubmit(c: Controls) {
         props.onSubmit(c);
     }
 
     return (
-        <Modal isShow={props.show()} class="bg-base-200" onBackdropClick={() => props.setShow(false)}>
+        <Modal isShow={props.show} class="bg-base-200" onBackdropClick={props.onClose}>
             <h2 class="text-2xl">Новое слово</h2>
             <div className="divider"/>
 
@@ -62,8 +66,11 @@ export const WordCreateModal: Component<Props> = (props) => {
                 </FormField>
 
                 <div class="modal-actions flex items-center justify-end pt-4 gap-2">
-                    <button class="btn btn-ghost text-error" type="button"
-                            onClick={() => props.setShow(false)}>Закрыть
+                    <button
+                        class="btn btn-ghost text-error" type="button"
+                        onClick={props.onClose}
+                    >
+                        Закрыть
                     </button>
                     <button class="btn btn-primary" type="submit">Создать</button>
                 </div>

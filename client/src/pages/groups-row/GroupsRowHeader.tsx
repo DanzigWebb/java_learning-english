@@ -2,8 +2,8 @@ import { Component, createSignal, onCleanup, onMount } from 'solid-js';
 import { CreateWordControls, CreateWordGroupModal } from '@shared/components/modals';
 import { createForm } from '@root/src/lib/form/createForm';
 import { HomeFilters } from '@root/src/pages/groups-row/type/home.type';
-import { Tooltip } from '@components/tooltip/Tooltip';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { Tooltip } from '@solsy/ui';
 
 type Controls = HomeFilters;
 

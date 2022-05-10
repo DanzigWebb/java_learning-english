@@ -1,7 +1,7 @@
 import { Component, createMemo, createSignal, Show } from 'solid-js';
 import { WordGroupDto } from '@models/words';
-import { Menu, MenuOption } from '@components/menu';
-import { Tooltip } from '@components/tooltip/Tooltip';
+import { Menu, MenuOption } from '@solsy/ui';
+import { Tooltip } from '@solsy/ui';
 
 type Props = {
     done: boolean;
