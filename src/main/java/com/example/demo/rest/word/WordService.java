@@ -12,8 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class WordService {
     private final WordRepo wordRepo;
@@ -26,9 +24,9 @@ public class WordService {
         this.wordMapper = wordMapper;
     }
 
-    public Page<Word> getAll(int page, int size) {
+    public Page<Word> getAll(int page, int size, String name) {
         var params = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        Page<WordEntity> entities = wordRepo.findAll(params);
+        var entities = wordRepo.findAllByName("%" + name + "%", params);
         return entities.map(wordMapper::toModel);
     }
 

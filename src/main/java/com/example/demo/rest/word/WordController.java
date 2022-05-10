@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller()
 @RequestMapping("api/v1/word")
 @Validated
@@ -53,9 +55,10 @@ public class WordController {
     public @ResponseBody
     Page<Word> getAll(
             @RequestParam int page,
-            @RequestParam int size
+            @RequestParam int size,
+            @RequestParam(required = false, defaultValue = "") String name
     ) {
-        return wordService.getAll(page, size);
+        return wordService.getAll(page, size, name);
     }
 
     @GetMapping("/translate")
