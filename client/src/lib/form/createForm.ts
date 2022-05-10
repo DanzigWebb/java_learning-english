@@ -85,8 +85,8 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         name: Name
     ) => {
         const errorMessage = validateControl(name, value, options.validators) as string;
-        const state = {...errors, [name]: errorMessage};
-        setErrors(reconcile(state));
+        const clone = reconcile(errors);
+        setErrors({...clone, [name]: errorMessage});
     };
 
     /**
@@ -96,7 +96,8 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         control: Name,
         message: string,
     ) => {
-        setErrors({...errors, [control]: message});
+        const clone = reconcile(errors);
+        setErrors({...clone, [control]: message});
     };
 
     /**

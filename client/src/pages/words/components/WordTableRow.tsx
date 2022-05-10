@@ -2,6 +2,7 @@ import { Component, createSignal } from 'solid-js';
 import { WordDto } from '@models/words';
 import { createForm } from '@root/src/lib/form/createForm';
 import { Validators } from '@root/src/lib/form/validators/validators';
+import { Input, Toggle } from '@solsy/ui';
 
 type Props = {
     word: WordDto;
@@ -25,7 +26,7 @@ export const WordTableRow: Component<Props> = (props) => {
 
     function update() {
         if (errors.name || errors.definition) {
-            return
+            return;
         }
 
         const {name, definition} = getValues();
@@ -40,39 +41,29 @@ export const WordTableRow: Component<Props> = (props) => {
     return (
         <>
             <td>
-                <input
-                    type="text"
-                    class="input input-ghost h-auto w-full"
-                    classList={{
-                        'input-error': !!errors.name
-                    }}
+                <Input
+                    color="ghost"
+                    error={!!errors.name}
                     value={word().name}
-                    {...register('name', {
-                            validators: [Validators.required()]
-                        }
-                    )}
                     onBlur={update}
+                    {...register('name', {validators: [Validators.required()]})}
                 />
             </td>
             <td>
-                <input
-                    type="text"
-                    class="input input-ghost h-auto w-full"
+                <Input
+                    color="ghost"
                     value={word().definition}
-                    {...register('definition')}
                     onBlur={update}
+                    {...register('definition')}
                 />
             </td>
             <td>
                 <div>
-                    <input
-                        onClick={() => toggle(word())}
-                        type="checkbox"
-                        class="toggle toggle-xs shrink"
-                        classList={{
-                            'toggle-accent': word().done
-                        }}
-                        checked={word().done}
+                    <Toggle
+                        size="xs"
+                        color={word().done ? 'accent' : undefined}
+                        value={word().done}
+                        onChange={() => toggle(word())}
                     />
                 </div>
             </td>

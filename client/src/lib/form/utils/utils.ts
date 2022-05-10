@@ -145,5 +145,5 @@ export const resetControls = <Controls>(
 export const resetErrors = <Controls>(
     setErrors: SetStoreFunction<FormError<Controls>>
 ) => {
-    setErrors(reconcile({}));
+    setErrors({});
 };

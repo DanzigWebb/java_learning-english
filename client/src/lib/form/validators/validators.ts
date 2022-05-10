@@ -3,7 +3,7 @@ import { FormValidator } from '@root/src/lib/form/form.type';
 export class Validators {
     static required = (
         errorMessage = 'Required field'
-    ): FormValidator<string | undefined> => (val) => (
+    ): FormValidator<string | boolean> => (val) => (
         val === null || val === undefined || (typeof val === 'string' && val.length === 0)
             ? errorMessage
             : undefined
