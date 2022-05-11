@@ -30,7 +30,7 @@ export const ThemeMenu: Component = () => {
                 reference={menuTrigger()}
                 onBackdropClick={toggleMenu}
             >
-                <MenuOption onClick={() => toggleTheme('light')} active={app.theme() === 'light'}>
+                <MenuOption onClick={() => toggleTheme('cupcake')} active={app.theme() === 'cupcake'}>
                     <i class="fa-solid fa-sun"/>
                 </MenuOption>
                 <MenuOption onClick={() => toggleTheme('dark')} active={app.theme() === 'dark'}>

@@ -2,7 +2,7 @@ import { Accessor, Component, createContext, createSignal, useContext } from 'so
 import { appStorage } from '@root/src/services/storage';
 import { AlertProp } from '@root/src/shared/views/alerts/Alerts';
 
-export type Theme = 'light' | 'dark';
+export type Theme = 'cupcake' | 'dark';
 
 type AppContextType = {
     auth: Accessor<boolean>;
