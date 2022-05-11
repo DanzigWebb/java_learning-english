@@ -19,22 +19,23 @@ export const WordTable: Component<Props> = (props) => {
     return (
         <table class="table table-zebra table-compact w-full">
             <thead>
-            <tr>
-                <th>#</th>
-                <th>Название</th>
-                <th>Перевод</th>
-                <th>Статус</th>
-            </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Перевод</th>
+                    <th>Статус</th>
+                </tr>
             </thead>
             <tbody>
-            <For each={props.words || []}>
-                {(word, i) => (
-                    <tr>
-                        <th>{i() + 1}</th>
-                        <WordTableRow word={word} onUpdate={toggle}/>
-                    </tr>
-                )}
-            </For>
+                <For each={props.words || []}>
+                    {(word, i) => (
+                        <WordTableRow
+                            word={word}
+                            wordIndex={i() + 1}
+                            onUpdate={toggle}
+                        />
+                    )}
+                </For>
             </tbody>
         </table>
     );

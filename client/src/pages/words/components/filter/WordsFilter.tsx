@@ -1,5 +1,7 @@
-import { Component, createSignal, observable, onCleanup } from 'solid-js';
+import { Component, onCleanup } from 'solid-js';
 import { Input } from '@solsy/ui';
+import { debounceTime, Subject } from 'rxjs';
+import { createStore } from 'solid-js/store';
 
 export type WordsFilter = {
     name: string;
@@ -11,17 +13,22 @@ type Props = {
 
 export const WordsFilter: Component<Props> = (props) => {
 
-    const [filters, setFilters] = createSignal<WordsFilter>({
+    const [filters, setFilters] = createStore<WordsFilter>({
         name: ''
     });
 
-    const obs$ = observable(filters).subscribe(
-        (filters) => props.onInput?.(filters)
-    );
-    onCleanup(obs$.unsubscribe);
+    const subject$ = new Subject<WordsFilter>();
+    const subscriber = subject$.pipe(
+        debounceTime(200),
+    ).subscribe(f => props.onInput?.(f));
+
+    onCleanup(() => {
+        subscriber.unsubscribe();
+    });
 
     const updateName = (name: string) => {
-        setFilters(filters => ({...filters, name}));
+        setFilters('name', name);
+        subject$.next(filters);
     };
 
     return (

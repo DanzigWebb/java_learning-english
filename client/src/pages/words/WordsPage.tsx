@@ -67,21 +67,16 @@ export const WordsPage: Component = () => {
     }
 
     return (
-        <Page full>
-            <div class="container p-2">
-                <h1 class="text-2xl py-4">Библиотека слов</h1>
-                <div class="flex w-full">
-
+        <Page full class="p-2">
+            <div class="container">
+                <div class="flex w-full sticky top-0">
                     <WordsFilter onInput={updateFilters}/>
-
                     <div class="flex-1"/>
-
                     <Tooltip message="Добавить слово" class="flex items-center">
                         <Button circle size="sm" onClick={showCreateModal}>
                             <i class="fa-solid fa-plus"/>
                         </Button>
                     </Tooltip>
-
                     <WordCreateModal
                         show={show()}
                         onClose={() => setShow(false)}

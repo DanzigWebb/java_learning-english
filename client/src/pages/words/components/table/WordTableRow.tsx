@@ -6,6 +6,7 @@ import { Input, Toggle } from '@solsy/ui';
 
 type Props = {
     word: WordDto;
+    wordIndex: number;
     onUpdate?: (w: WordDto) => void;
 }
 
@@ -39,7 +40,10 @@ export const WordTableRow: Component<Props> = (props) => {
     }
 
     return (
-        <>
+        <tr>
+            <td>
+                {props.wordIndex}
+            </td>
             <td>
                 <Input
                     color="ghost"
@@ -67,6 +71,6 @@ export const WordTableRow: Component<Props> = (props) => {
                     />
                 </div>
             </td>
-        </>
+        </tr>
     );
 };
