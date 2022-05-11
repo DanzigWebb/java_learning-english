@@ -1,10 +1,13 @@
 import { Component, onCleanup } from 'solid-js';
-import { Input } from '@solsy/ui';
-import { debounceTime, Subject } from 'rxjs';
 import { createStore } from 'solid-js/store';
+import { Input, Option, Select } from '@solsy/ui';
+import { debounceTime, Subject } from 'rxjs';
+
+type Ranges = 'all' | 'week' | 'month' | 'year'
 
 export type WordsFilter = {
     name: string;
+    range: Date | null;
 }
 
 type Props = {
@@ -14,7 +17,8 @@ type Props = {
 export const WordsFilter: Component<Props> = (props) => {
 
     const [filters, setFilters] = createStore<WordsFilter>({
-        name: ''
+        name: '',
+        range: null
     });
 
     const subject$ = new Subject<WordsFilter>();
@@ -31,13 +35,43 @@ export const WordsFilter: Component<Props> = (props) => {
         subject$.next(filters);
     };
 
+    const updateRange = (v: string | number) => {
+        if (!v) {
+            setFilters('range', null);
+        }
+        const range = rangeToDate(String(v).toLowerCase() as Ranges)
+        setFilters('range', range);
+        subject$.next(filters);
+    };
+
+    const rangeToDate = (range: Ranges) => {
+        const date = new Date();
+
+        switch (range) {
+            case 'week':
+                return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+            case 'month':
+                return new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+            case 'year':
+                return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+            default:
+                return null;
+        }
+    }
+
     return (
-        <section>
+        <section class="flex gap-2">
             <Input
                 bordered
                 placeholder="searching"
                 onInput={e => updateName(e.currentTarget.value)}
             />
+            <Select value="All" bordered onInput={updateRange}>
+                <Option value="All">All</Option>
+                <Option value="Week">Week</Option>
+                <Option value="Month">Month</Option>
+                <Option value="Year">Year</Option>
+            </Select>
         </section>
     );
 };

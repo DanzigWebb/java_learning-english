@@ -11,7 +11,7 @@ import { WordCreateModal, WordsFilter, WordTable } from '@root/src/pages/words/c
  * 1) (done) Реализовать пагинацию
  * 2) Добавить разделитель фильтр по датам
  */
-type WordsParams = Required<Pick<GetWordsParams, 'page' | 'size' | 'name'>>;
+type WordsParams = Required<Pick<GetWordsParams, 'page' | 'size' | 'name' | 'range'>>;
 
 async function getAllWords(params: WordsParams) {
     const {data} = await getWords(params);
@@ -26,6 +26,7 @@ export const WordsPage: Component = () => {
         page: 0,
         size: 4,
         name: '',
+        range: null,
     });
 
     onMount(async () => {
@@ -49,7 +50,12 @@ export const WordsPage: Component = () => {
     async function updateFilters(filters: WordsFilter) {
         const {name} = filters;
         if (name !== params().name) {
-            setParams(() => ({page: 0, size: 4, name}));
+            setParams((state) => ({
+                ...state,
+                page: 0,
+                size: 4,
+                name
+            }));
             const page = await fetchData();
             setWords(page.content);
         }
@@ -85,6 +91,7 @@ export const WordsPage: Component = () => {
                 </div>
 
                 <div class="divider"/>
+
                 <div class="overflow-x-auto">
 
                     <WordTable words={words()}/>

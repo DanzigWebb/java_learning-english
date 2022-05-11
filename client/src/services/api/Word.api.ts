@@ -14,6 +14,7 @@ export const updateWord = (dto: WordCreateDto, wordId: string) => {
 
 export interface GetWordsParams extends PageParams {
     name?: string;
+    range?: Date | null;
 }
 
 export const getWords = (params: GetWordsParams = {page: 0, size: 10}) => {
