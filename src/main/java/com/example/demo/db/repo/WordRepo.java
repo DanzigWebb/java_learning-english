@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 public interface WordRepo extends JpaRepository<WordEntity, Long> {
@@ -14,4 +16,7 @@ public interface WordRepo extends JpaRepository<WordEntity, Long> {
 
     @Query("SELECT w FROM word w WHERE UPPER(w.name) LIKE UPPER(?1)")
     Page<WordEntity> findAllByName(String name, Pageable pageable);
+
+    @Query("SELECT w FROM word w WHERE UPPER(w.name) LIKE UPPER(?1) AND w.createdAt >= ?2 AND w.createdAt <= ?3")
+    Page<WordEntity> findAllByName(String name, LocalDateTime from, LocalDateTime to, Pageable pageable);
 }

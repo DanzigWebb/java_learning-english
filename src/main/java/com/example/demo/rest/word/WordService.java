@@ -12,6 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.TimeZone;
+
 @Service
 public class WordService {
     private final WordRepo wordRepo;
@@ -24,9 +29,17 @@ public class WordService {
         this.wordMapper = wordMapper;
     }
 
-    public Page<Word> getAll(int page, int size, String name) {
+    public Page<Word> getAll(int page, int size, String name, Long from, Long to) {
         var params = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        var entities = wordRepo.findAllByName("%" + name + "%", params);
+        Page<WordEntity> entities;
+        if (from != null && to != null) {
+            var fromDate = longToLocalDate(from);
+            var toDate = longToLocalDate(to);
+            entities = wordRepo.findAllByName("%" + name + "%", fromDate, toDate, params);
+        } else {
+            entities = wordRepo.findAllByName("%" + name + "%", params);
+        }
+
         return entities.map(wordMapper::toModel);
     }
 
@@ -66,5 +79,12 @@ public class WordService {
         entity.setRank(word.getRank());
 
         return wordMapper.toModel(wordRepo.save(entity));
+    }
+
+    private LocalDateTime longToLocalDate(Long time) {
+        return LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(time),
+                TimeZone.getDefault().toZoneId()
+        );
     }
 }

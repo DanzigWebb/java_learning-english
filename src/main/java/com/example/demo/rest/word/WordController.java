@@ -7,11 +7,13 @@ import com.example.demo.translate.yandex.model.YandexTranslateResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Controller()
 @RequestMapping("api/v1/word")
@@ -56,9 +58,11 @@ public class WordController {
     Page<Word> getAll(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestParam(required = false, defaultValue = "") String name
+            @RequestParam(required = false, defaultValue = "") String name,
+            @RequestParam(required = false) Long from,
+            @RequestParam(required = false) Long to
     ) {
-        return wordService.getAll(page, size, name);
+        return wordService.getAll(page, size, name, from, to);
     }
 
     @GetMapping("/translate")
