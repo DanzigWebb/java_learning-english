@@ -5,12 +5,6 @@ import { WordCreateDto, WordDto } from '@models/words';
 import { Button, Tooltip } from '@solsy/ui';
 import { WordCreateModal, WordsFilter, WordTable } from '@root/src/pages/words/components';
 
-/**
- * Todo: refactoring
- * - BE
- * 1) (done) Реализовать пагинацию
- * 2) Добавить разделитель фильтр по датам
- */
 type WordsParams = Required<Pick<GetWordsParams, 'page' | 'size' | 'name' | 'range'>>;
 
 async function getAllWords(params: WordsParams) {
@@ -48,13 +42,13 @@ export const WordsPage: Component = () => {
     }
 
     async function updateFilters(filters: WordsFilter) {
-        const {name} = filters;
-        if (name !== params().name) {
-            setParams((state) => ({
-                ...state,
+        const {name, range} = filters;
+        if (name !== params().name || range !== params().range) {
+            setParams(() => ({
                 page: 0,
                 size: 4,
-                name
+                name,
+                range
             }));
             const page = await fetchData();
             setWords(page.content);

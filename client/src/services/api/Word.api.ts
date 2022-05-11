@@ -18,7 +18,20 @@ export interface GetWordsParams extends PageParams {
 }
 
 export const getWords = (params: GetWordsParams = {page: 0, size: 10}) => {
+    const {page = 0, size = 10, name = '', range = null} = params;
+    const query = new URLSearchParams();
+
+    query.set('page', page.toString());
+    query.set('size', size.toString());
+    if (name) {
+        query.set('name', name);
+    }
+    if (range) {
+        query.set('from', String(+range));
+        query.set('to', String(+new Date()));
+    }
+
     return httpClient.get<Page<WordDto>>(`${url}/all`, {
-        params
+        params: query
     });
 };

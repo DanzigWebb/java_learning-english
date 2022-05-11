@@ -3,7 +3,7 @@ import { createStore } from 'solid-js/store';
 import { Input, Option, Select } from '@solsy/ui';
 import { debounceTime, Subject } from 'rxjs';
 
-type Ranges = 'all' | 'week' | 'month' | 'year'
+type Ranges = 'all' | 'day' | 'week' | 'month' | 'year';
 
 export type WordsFilter = {
     name: string;
@@ -39,7 +39,7 @@ export const WordsFilter: Component<Props> = (props) => {
         if (!v) {
             setFilters('range', null);
         }
-        const range = rangeToDate(String(v).toLowerCase() as Ranges)
+        const range = rangeToDate(String(v).toLowerCase() as Ranges);
         setFilters('range', range);
         subject$.next(filters);
     };
@@ -48,6 +48,8 @@ export const WordsFilter: Component<Props> = (props) => {
         const date = new Date();
 
         switch (range) {
+            case 'day':
+                return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
             case 'week':
                 return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
             case 'month':
@@ -57,7 +59,7 @@ export const WordsFilter: Component<Props> = (props) => {
             default:
                 return null;
         }
-    }
+    };
 
     return (
         <section class="flex gap-2">
@@ -68,6 +70,7 @@ export const WordsFilter: Component<Props> = (props) => {
             />
             <Select value="All" bordered onInput={updateRange}>
                 <Option value="All">All</Option>
+                <Option value="Day">Day</Option>
                 <Option value="Week">Week</Option>
                 <Option value="Month">Month</Option>
                 <Option value="Year">Year</Option>
