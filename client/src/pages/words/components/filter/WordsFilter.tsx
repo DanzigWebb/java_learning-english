@@ -2,15 +2,16 @@ import { Component, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { Input, Option, Select } from '@solsy/ui';
 import { debounceTime, Subject } from 'rxjs';
-
-type Ranges = 'all' | 'day' | 'week' | 'month' | 'year';
+import { WordsParamRanges } from '@services/api';
 
 export type WordsFilter = {
     name: string;
-    range: Date | null;
+    range: WordsParamRanges;
 }
 
 type Props = {
+    name: string;
+    range: WordsParamRanges;
     onInput?: (v: WordsFilter) => void;
 }
 
@@ -18,7 +19,7 @@ export const WordsFilter: Component<Props> = (props) => {
 
     const [filters, setFilters] = createStore<WordsFilter>({
         name: '',
-        range: null
+        range: 'all'
     });
 
     const subject$ = new Subject<WordsFilter>();
@@ -37,28 +38,10 @@ export const WordsFilter: Component<Props> = (props) => {
 
     const updateRange = (v: string | number) => {
         if (!v) {
-            setFilters('range', null);
+            setFilters('range', 'all');
         }
-        const range = rangeToDate(String(v).toLowerCase() as Ranges);
-        setFilters('range', range);
+        setFilters('range', String(v).toLowerCase() as WordsParamRanges);
         subject$.next(filters);
-    };
-
-    const rangeToDate = (range: Ranges) => {
-        const date = new Date();
-
-        switch (range) {
-            case 'day':
-                return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
-            case 'week':
-                return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
-            case 'month':
-                return new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
-            case 'year':
-                return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
-            default:
-                return null;
-        }
     };
 
     return (
@@ -66,9 +49,10 @@ export const WordsFilter: Component<Props> = (props) => {
             <Input
                 bordered
                 placeholder="searching"
+                value={props.name}
                 onInput={e => updateName(e.currentTarget.value)}
             />
-            <Select value="All" bordered onInput={updateRange}>
+            <Select value={'All'} bordered onInput={updateRange}>
                 <Option value="All">All</Option>
                 <Option value="Day">Day</Option>
                 <Option value="Week">Week</Option>
