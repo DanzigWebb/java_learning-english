@@ -1,6 +1,6 @@
 import { Component, createSignal, onMount } from 'solid-js';
 import { Page } from '@root/src/pages';
-import { createWord, getWords, GetWordsParams, WordsParamRanges } from '@services/api';
+import { createWord, getWords, GetWordsParams, WordsParamRange } from '@services/api';
 import { WordCreateDto, WordDto } from '@models/words';
 import { Button, Tooltip } from '@solsy/ui';
 import { WordCreateModal, WordsFilter, WordTable } from '@root/src/pages/words/components';
@@ -30,7 +30,7 @@ export const WordsPage: Component = () => {
     onMount(async () => {
         const params: WordsFilter = {
             name: searchParams.name || '',
-            range: searchParams.range as WordsParamRanges || 'all',
+            range: searchParams.range as WordsParamRange || 'all',
         };
         await updateFilters(params);
     });
@@ -77,7 +77,11 @@ export const WordsPage: Component = () => {
         <Page full class="p-2">
             <div class="container">
                 <div class="flex w-full sticky top-0">
-                    <WordsFilter name={params.name} range={params.range} onInput={updateFilters}/>
+                    <WordsFilter
+                        name={params.name}
+                        range={params.range}
+                        onInput={updateFilters}
+                    />
                     <div class="flex-1"/>
                     <Tooltip message="Добавить слово" class="flex items-center">
                         <Button circle size="sm" onClick={showCreateModal}>

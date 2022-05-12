@@ -1,17 +1,18 @@
 import { Component, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { Input, Option, Select } from '@solsy/ui';
+import { Input } from '@solsy/ui';
 import { debounceTime, Subject } from 'rxjs';
-import { WordsParamRanges } from '@services/api';
+import { WordsParamRange } from '@services/api';
+import { WordsFilterRange } from './WordsFilterRange';
 
 export type WordsFilter = {
     name: string;
-    range: WordsParamRanges;
+    range: WordsParamRange;
 }
 
 type Props = {
     name: string;
-    range: WordsParamRanges;
+    range: WordsParamRange;
     onInput?: (v: WordsFilter) => void;
 }
 
@@ -36,11 +37,8 @@ export const WordsFilter: Component<Props> = (props) => {
         subject$.next(filters);
     };
 
-    const updateRange = (v: string | number) => {
-        if (!v) {
-            setFilters('range', 'all');
-        }
-        setFilters('range', String(v).toLowerCase() as WordsParamRanges);
+    const updateRange = (range: WordsParamRange) => {
+        setFilters('range', range);
         subject$.next(filters);
     };
 
@@ -52,13 +50,11 @@ export const WordsFilter: Component<Props> = (props) => {
                 value={props.name}
                 onInput={e => updateName(e.currentTarget.value)}
             />
-            <Select value={'All'} bordered onInput={updateRange}>
-                <Option value="All">All</Option>
-                <Option value="Day">Day</Option>
-                <Option value="Week">Week</Option>
-                <Option value="Month">Month</Option>
-                <Option value="Year">Year</Option>
-            </Select>
+
+            <WordsFilterRange
+                range={props.range || 'all'}
+                onInput={updateRange}
+            />
         </section>
     );
 };

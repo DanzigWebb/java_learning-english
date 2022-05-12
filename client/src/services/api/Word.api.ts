@@ -12,11 +12,11 @@ export const updateWord = (dto: WordCreateDto, wordId: string) => {
     return httpClient.put<WordDto>(`${url}/${wordId}`, dto);
 };
 
-export type WordsParamRanges = 'all' | 'day' | 'week' | 'month' | 'year';
+export type WordsParamRange = 'all' | 'day' | 'week' | 'month' | 'year';
 
 export interface GetWordsParams extends PageParams {
     name?: string;
-    range?: WordsParamRanges;
+    range?: WordsParamRange;
 }
 
 export const getWords = (params: GetWordsParams = {page: 0, size: 10}) => {
@@ -40,7 +40,7 @@ export const getWords = (params: GetWordsParams = {page: 0, size: 10}) => {
 };
 
 
-const rangeToDate = (range: WordsParamRanges) => {
+const rangeToDate = (range: WordsParamRange) => {
     const date = new Date();
 
     switch (range) {
