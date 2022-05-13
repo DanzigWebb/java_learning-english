@@ -24,6 +24,7 @@
     "@solsy/ui": "^0.0.3",
     "@thisbeyond/solid-dnd": "^0.4.2",
     "axios": "^0.26.0",
+    "dayjs": "^1.11.2",
     "lexorank": "^1.0.4",
     "rxjs": "^7.5.5",
     "solid-app-router": "^0.3.0",
