@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.2",
-    "@solsy/ui": "^0.0.3",
+    "@solsy/ui": "^0.0.4",
     "@thisbeyond/solid-dnd": "^0.4.2",
     "axios": "^0.26.0",
     "dayjs": "^1.11.2",
