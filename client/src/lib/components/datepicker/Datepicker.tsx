@@ -98,6 +98,7 @@ export const Datepicker: Component<DatepickerProps> = (props) => {
         if (props.closeOnSelect) {
             console.log('must close');
             close();
+            console.log(state);
         }
     };
 
