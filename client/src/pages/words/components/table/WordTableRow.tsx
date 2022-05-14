@@ -47,6 +47,7 @@ export const WordTableRow: Component<Props> = (props) => {
             <td>
                 <Input
                     color="ghost"
+                    class="w-full"
                     error={!!errors.name}
                     value={word().name}
                     onBlur={update}
@@ -56,6 +57,7 @@ export const WordTableRow: Component<Props> = (props) => {
             <td>
                 <Input
                     color="ghost"
+                    class="w-full"
                     value={word().definition}
                     onBlur={update}
                     {...register('definition')}
