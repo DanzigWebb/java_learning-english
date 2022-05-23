@@ -49,7 +49,7 @@ export const WordsPage: Component = () => {
         const {name, range} = filters;
         const params: WordsParams = {
             page: 0,
-            size: 4,
+            size: 40,
             name,
             range
         };

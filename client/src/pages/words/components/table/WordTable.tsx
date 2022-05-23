@@ -20,7 +20,8 @@ export const WordTable: Component<Props> = (props) => {
         <table class="table table-zebra table-compact w-full">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th class="w-4">#</th>
+                    <th class="w-4"></th>
                     <th>Название</th>
                     <th>Перевод</th>
                     <th>Статус</th>

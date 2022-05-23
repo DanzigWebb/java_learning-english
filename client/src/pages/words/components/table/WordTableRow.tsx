@@ -1,8 +1,8 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createSignal, Show } from 'solid-js';
 import { WordDto } from '@models/words';
 import { createForm } from '@root/src/lib/form/createForm';
 import { Validators } from '@root/src/lib/form/validators/validators';
-import { Input, Toggle } from '@solsy/ui';
+import { Button, Input, Popover, Toggle } from '@solsy/ui';
 
 type Props = {
     word: WordDto;
@@ -17,6 +17,7 @@ type Controls = {
 
 export const WordTableRow: Component<Props> = (props) => {
     const [word, setWord] = createSignal<WordDto>(props.word);
+    const [translate, setTranslate] = createSignal(false);
     const {register, getValues, errors} = createForm<Controls>();
 
     function toggle(word: WordDto) {
@@ -45,6 +46,19 @@ export const WordTableRow: Component<Props> = (props) => {
                 {props.wordIndex}
             </td>
             <td>
+                <Show when={props.word.associate}>
+                    <Popover trigger={
+                        <Button circle color="ghost" size="sm">
+                            <i class="fa-solid fa-circle-question"/>
+                        </Button>
+                    }>
+                        <p class="p-4 rounded bg-base-300 shadow-2xl">
+                            {props.word.associate}
+                        </p>
+                    </Popover>
+                </Show>
+            </td>
+            <td>
                 <Input
                     color="ghost"
                     class="w-full"
@@ -57,9 +71,10 @@ export const WordTableRow: Component<Props> = (props) => {
             <td>
                 <Input
                     color="ghost"
-                    class="w-full"
+                    class={`w-full ${translate() ? 'opacity-100' : 'opacity-0'}`}
                     value={word().definition}
                     onBlur={update}
+                    onFocus={() => setTranslate(true)}
                     {...register('definition')}
                 />
             </td>
