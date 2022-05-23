@@ -1,6 +1,6 @@
 import { WordsParamRange } from '@services/api';
 import { Component, createSignal, For } from 'solid-js';
-import { Button, Menu, MenuOption, Tooltip, Datepicker } from '@solsy/ui';
+import { Button, Menu, MenuOption, Tooltip } from '@solsy/ui';
 
 type Props = {
     range: WordsParamRange;
@@ -57,19 +57,19 @@ export const WordsFilterRange: Component<Props> = props => {
                 </For>
             </Menu>
 
-            <Datepicker
-                bordered
-                placeholder="From"
-                weekHolidays={[5, 6]}
-                closeOnSelect>
-            </Datepicker>
+            {/*<Datepicker*/}
+            {/*    bordered*/}
+            {/*    placeholder="From"*/}
+            {/*    weekHolidays={[5, 6]}*/}
+            {/*    closeOnSelect>*/}
+            {/*</Datepicker>*/}
 
-            <Datepicker
-                bordered
-                placeholder="To"
-                weekHolidays={[5, 6]}
-                closeOnSelect>
-            </Datepicker>
+            {/*<Datepicker*/}
+            {/*    bordered*/}
+            {/*    placeholder="To"*/}
+            {/*    weekHolidays={[5, 6]}*/}
+            {/*    closeOnSelect>*/}
+            {/*</Datepicker>*/}
         </>
     );
 };

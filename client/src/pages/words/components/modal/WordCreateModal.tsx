@@ -1,8 +1,8 @@
 import { Component, createEffect } from 'solid-js';
-import { createForm } from '@root/src/lib/form/createForm';
+import { Input, Modal, FormField, FormError, Button } from '@solsy/ui';
+import { WordDto } from '@models/words';
 import { Validators } from '@root/src/lib/form/validators/validators';
-import { Modal } from '@solsy/ui';
-import { FormField, FormError } from '@solsy/ui';
+import { createForm } from '@root/src/lib/form/createForm';
 
 type Controls = {
     name: string;
@@ -14,15 +14,32 @@ type Props = {
     show: boolean;
     onClose: () => void;
     onSubmit: (c: Controls) => void;
+    wordDto?: WordDto;
 }
 
 export const WordCreateModal: Component<Props> = (props) => {
-    const {register, errors, submit} = createForm<Controls>();
 
+    const {register, errors, submit, setValue} = createForm<Controls>({
+        defaultValues: {
+            name: props.wordDto?.name,
+            definition: props.wordDto?.definition,
+            associate: props.wordDto?.associate
+        }
+    });
 
     createEffect(() => {
-        console.log('on change');
+        if (props.show) {
+            Promise.resolve().then(() => {
+                updateValue();
+            })
+        }
     })
+
+    function updateValue() {
+        setValue('name', props.wordDto?.name || '');
+        setValue('definition', props.wordDto?.definition || '');
+        setValue('associate', props.wordDto?.associate || '');
+    }
 
     function onSubmit(c: Controls) {
         props.onSubmit(c);
@@ -35,12 +52,12 @@ export const WordCreateModal: Component<Props> = (props) => {
 
             <form onSubmit={submit(onSubmit)}>
                 <FormField>
-                    <input
+                    <Input
                         class="input"
                         type="text"
                         placeholder="name"
                         autocomplete="off"
-                        classList={{'input-error': !!errors.name}}
+                        error={!!errors.name}
                         {...register('name', {
                             validators: [Validators.required()]
                         })}
@@ -66,13 +83,15 @@ export const WordCreateModal: Component<Props> = (props) => {
                 </FormField>
 
                 <div class="modal-actions flex items-center justify-end pt-4 gap-2">
-                    <button
-                        class="btn btn-ghost text-error" type="button"
+                    <Button
+                        class="text-error"
+                        color="ghost"
+                        type="button"
                         onClick={props.onClose}
                     >
                         Закрыть
-                    </button>
-                    <button class="btn btn-primary" type="submit">Создать</button>
+                    </Button>
+                    <Button color="primary" type="submit">Создать</Button>
                 </div>
             </form>
         </Modal>

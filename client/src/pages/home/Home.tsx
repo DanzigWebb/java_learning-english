@@ -1,7 +1,7 @@
 import { Component, createSignal } from 'solid-js';
 import { Page } from '@root/src/pages';
 import { useNavigate } from 'solid-app-router';
-import { createWord } from '@services/api';
+import { CreateWord } from '@services/api';
 import { WordCreateDto } from '@models/words';
 import { PagesPathEnum } from '@root/src/pages/pages.type';
 
@@ -18,7 +18,7 @@ export const Home: Component = () => {
                     name: name(),
                     definition: '',
                 };
-                await createWord(group);
+                await CreateWord(group);
                 navigate(`/${PagesPathEnum.WORDS}`);
             } catch (e) {
                 // Todo: An error alert should be shown there

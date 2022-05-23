@@ -41,7 +41,6 @@ export function createForm<Controls extends {}>(options: FormOptions<Controls> =
         name: Name,
         registerOptions: RegisterOptions<Controls> = {}
     ) => {
-
         /**
          * Init validators for control
          */

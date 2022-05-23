@@ -1,10 +1,11 @@
 import { Component, For } from 'solid-js';
 import { WordTableRow } from './WordTableRow';
 import { WordDto } from '@models/words';
-import { updateWord } from '@services/api';
+import { UpdateWord } from '@services/api';
+import { Store } from 'solid-js/store/types/store';
 
 type Props = {
-    words: WordDto[];
+    words: Store<WordDto[]>;
 }
 
 export const WordTable: Component<Props> = (props) => {
@@ -13,7 +14,7 @@ export const WordTable: Component<Props> = (props) => {
      * Updates word's state
      */
     const toggle = async (word: WordDto) => {
-        await updateWord(word, word.id);
+        await UpdateWord(word, word.id);
     };
 
     return (
@@ -24,7 +25,7 @@ export const WordTable: Component<Props> = (props) => {
                     <th class="w-4"></th>
                     <th>Название</th>
                     <th>Перевод</th>
-                    <th>Статус</th>
+                    <th class="w-4"></th>
                 </tr>
             </thead>
             <tbody>

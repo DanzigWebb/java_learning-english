@@ -26,14 +26,15 @@ export const Values = <Obj extends {}, Key extends keyof Obj>(
  * Set value to html control
  */
 export const SetControlValue = (control: FormControl, value: any, event: Event) => {
-    switch (control.type) {
+    switch (control?.type) {
         case 'checkbox':
             (control as HTMLInputElement).checked = Boolean(value);
             break;
         default:
-            control.value = value;
+            if (control)
+                control.value = value;
     }
-    control.dispatchEvent(event);
+    control?.dispatchEvent(event);
 };
 
 /**

@@ -4,11 +4,11 @@ import { Page, PageParams } from '@api/Api.type';
 
 const url = 'api/v1/word';
 
-export const createWord = (dto: WordCreateDto) => {
+export const CreateWord = (dto: WordCreateDto) => {
     return httpClient.post<WordDto>(url, dto);
 };
 
-export const updateWord = (dto: WordCreateDto, wordId: string) => {
+export const UpdateWord = (dto: WordCreateDto, wordId: string) => {
     return httpClient.put<WordDto>(`${url}/${wordId}`, dto);
 };
 
@@ -19,7 +19,7 @@ export interface GetWordsParams extends PageParams {
     range?: WordsParamRange;
 }
 
-export const getWords = (params: GetWordsParams = {page: 0, size: 10}) => {
+export const GetWords = (params: GetWordsParams = {page: 0, size: 10}) => {
     const {page = 0, size = 10, name = '', range = null} = params;
     const query = new URLSearchParams();
 
